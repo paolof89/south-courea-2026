@@ -4,7 +4,7 @@
 
 'use strict';
 
-const CACHE_NAME = 'korea-2026-v2';
+const CACHE_NAME = 'korea-2026-v3';
 const DATA_URL = './data/itinerary.json';
 
 // App shell: files needed for the site to boot offline.
