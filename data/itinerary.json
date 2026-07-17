@@ -1,0 +1,252 @@
+{
+  "trip": {
+    "id": "korea-2026",
+    "title": "Corea 2026",
+    "startDate": "2026-07-26",
+    "endDate": "2026-08-13",
+    "timezone": "Asia/Seoul",
+    "lastUpdated": "2026-07-17",
+    "contentStatus": "partial"
+  },
+  "days": [
+    {
+      "id": "2026-07-26",
+      "dayNumber": 1,
+      "date": "2026-07-26",
+      "city": "Seoul",
+      "summary": "Arrivo a Seoul e Myeongdong",
+      "transferSummary": null,
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-26-arrival-icn",
+          "time": "16:35",
+          "type": "transport",
+          "title": "Arrivo all'aeroporto di Seoul-Incheon",
+          "description": "Arrivo al Terminal 2.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Incheon International Airport Terminal 2",
+            "city": "Incheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Incheon International Airport Terminal 2",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-07-26-myeongdong-night-market",
+          "time": "20:15",
+          "type": "market",
+          "title": "Myeongdong Night Market",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Myeongdong Night Market",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Myeongdong Night Market Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": "2026-07-27",
+      "dayNumber": 2,
+      "date": "2026-07-27",
+      "city": "Seoul",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-07-28",
+      "dayNumber": 3,
+      "date": "2026-07-28",
+      "city": "Seoul",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-07-29",
+      "dayNumber": 4,
+      "date": "2026-07-29",
+      "city": "Seoul",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-07-30",
+      "dayNumber": 5,
+      "date": "2026-07-30",
+      "city": "Seoul",
+      "summary": "Escursione a Suwon",
+      "transferSummary": "Seoul → treno → Suwon → treno → Seoul",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-07-31",
+      "dayNumber": 6,
+      "date": "2026-07-31",
+      "city": "Andong",
+      "summary": "Trasferimento a Andong",
+      "transferSummary": "Seoul → bus → Andong",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-01",
+      "dayNumber": 7,
+      "date": "2026-08-01",
+      "city": "Gyeongju",
+      "summary": "Trasferimento a Gyeongju",
+      "transferSummary": "Andong → bus → Gyeongju",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-02",
+      "dayNumber": 8,
+      "date": "2026-08-02",
+      "city": "Daegu",
+      "summary": "Trasferimento a Daegu",
+      "transferSummary": "Gyeongju → Daegu",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-03",
+      "dayNumber": 9,
+      "date": "2026-08-03",
+      "city": "Busan",
+      "summary": "Trasferimento a Busan",
+      "transferSummary": "Daegu → bus → Busan",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-04",
+      "dayNumber": 10,
+      "date": "2026-08-04",
+      "city": "Busan",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-05",
+      "dayNumber": 11,
+      "date": "2026-08-05",
+      "city": "Busan",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-06",
+      "dayNumber": 12,
+      "date": "2026-08-06",
+      "city": "Busan",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-07",
+      "dayNumber": 13,
+      "date": "2026-08-07",
+      "city": "Jeonju",
+      "summary": "Trasferimento a Jeonju",
+      "transferSummary": "Busan → bus → Jeonju",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-08",
+      "dayNumber": 14,
+      "date": "2026-08-08",
+      "city": "Suncheon",
+      "summary": "Trasferimento a Suncheon",
+      "transferSummary": "Jeonju → bus → Suncheon",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-09",
+      "dayNumber": 15,
+      "date": "2026-08-09",
+      "city": "Jeju",
+      "summary": "Trasferimento a Jeju via Boseong e Gwangju",
+      "transferSummary": "Suncheon → bus → Boseong → bus → Gwangju → aereo → Jeju",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-10",
+      "dayNumber": 16,
+      "date": "2026-08-10",
+      "city": "Jeju",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-11",
+      "dayNumber": 17,
+      "date": "2026-08-11",
+      "city": "Jeju",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-12",
+      "dayNumber": 18,
+      "date": "2026-08-12",
+      "city": "Seoul",
+      "summary": "Rientro a Seoul",
+      "transferSummary": "Jeju → aereo → Seoul",
+      "detailStatus": "placeholder",
+      "items": []
+    },
+    {
+      "id": "2026-08-13",
+      "dayNumber": 19,
+      "date": "2026-08-13",
+      "city": "Seoul",
+      "summary": null,
+      "transferSummary": null,
+      "detailStatus": "placeholder",
+      "items": []
+    }
+  ]
+}
