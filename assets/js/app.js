@@ -944,7 +944,11 @@ function registerServiceWorker() {
   const hadControllerAtLoad = Boolean(navigator.serviceWorker.controller);
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('./sw.js')
+      // updateViaCache: 'none' forces the browser to always bypass its HTTP
+      // cache when checking sw.js for changes, instead of trusting
+      // Cache-Control/max-age from the static host (e.g. GitHub Pages),
+      // which would otherwise delay update detection by several minutes.
+      .register('./sw.js', { updateViaCache: 'none' })
       .then((registration) => {
         watchForUpdates(registration, hadControllerAtLoad);
       })
