@@ -338,6 +338,58 @@ Esempio:
 - conservare nel campo `notes` le annotazioni utili non strutturabili;
 - se il testo originale è dubbio, riportarlo nel campo `sourceText` e impostare `status: "uncertain"`.
 
+### 6.2 Schema v2 — `transferFromPrevious` strutturato (retrocompatibile)
+
+A partire da questa versione, `transferFromPrevious` può includere campi
+opzionali aggiuntivi oltre a `mode`/`durationMinutes`/`notes`. Le voci più
+vecchie che usano solo lo schema base restano valide senza modifiche.
+
+```json
+"transferFromPrevious": {
+  "mode": "bus",
+  "line": "182 / 600",
+  "from": { "name": "Jungang Rotary", "nameLocal": "중앙로터리" },
+  "to":   { "name": "Jeju ICC",       "nameLocal": "제주국제컨벤션센터" },
+  "durationMinutes": 25,
+  "frequency": "circa ogni 30 min",
+  "fare": { "amount": null, "currency": "KRW", "display": "₩1.200–2.000", "estimated": true },
+  "tmoney": true,
+  "booking": { "label": "bustago.or.kr", "url": "https://www.bustago.or.kr" },
+  "naverQuery": "중앙로터리",
+  "estimated": true,
+  "notes": "Si sale davanti al Paris Baguette a Jungang Rotary"
+}
+```
+
+Regole per i nuovi campi (tutti opzionali):
+
+- `line`: numero/nome linea (bus, metro, treno), stringa libera.
+- `from` / `to`: `{ "name": ..., "nameLocal": ... }` — `nameLocal` solo se
+  noto (nome nella grafia locale, es. hangul).
+- `frequency`: stringa libera sulla frequenza del mezzo (es. "ogni ~30 min").
+- `fare`: oggetto "money" generalizzato (vedi sotto) per il costo del
+  singolo spostamento, distinto da `cost` della tappa.
+- `tmoney`: `true` se pagabile con T-money, `false` se no, `null`/assente se
+  non noto.
+- `booking`: `{ "label": ..., "url": ... }` solo per bus intercity
+  (bustago.or.kr), Korail (letskorail.com), compagnie aeree; `url` deve
+  essere `https:`. I mezzi urbani (bus/metro cittadini) non hanno
+  `booking`.
+- `naverQuery`: testo per il link di ricerca Naver Map (vedi §11.2); se
+  assente si usa `to.nameLocal`, poi `to.name`.
+- `estimated`: `true` se l'intero spostamento è una stima di pianificazione
+  (non ancora verificata sul posto); va sempre mostrato in UI con un
+  indicatore neutro ("≈ stima"), mai promosso silenziosamente a dato certo.
+
+Oggetto "money" generalizzato (usato sia in `cost` che in `fare`):
+
+```json
+{ "amount": null, "currency": "KRW", "display": "₩1.200–2.000", "estimated": true }
+```
+
+- `currency`: libera (`EUR`, `KRW`, ...);
+- `estimated`: opzionale, `true` se l'importo è una stima.
+
 ---
 
 ## 7. Contenuto iniziale
@@ -535,7 +587,16 @@ Non serve una chiave API per semplici link esterni. Non integrare mappe embedded
 
 ### 11.2 Naver Map
 
-Aggiungere un link Naver solo quando l’URL è stato verificato manualmente. In assenza di URL valido, mostrare soltanto Google Maps e un pulsante per copiare il nome coreano del luogo, se disponibile.
+Per i **luoghi** (`location.naverMapsUrl`): aggiungere un link Naver solo
+quando l’URL è stato verificato manualmente. In assenza di URL valido,
+mostrare soltanto Google Maps e un pulsante per copiare il nome coreano del
+luogo, se disponibile.
+
+Per i **connettori di trasferimento** (`transferFromPrevious`, schema v2,
+§6.2): il link Naver è generato lato client come URL di ricerca da
+`naverQuery` (o, in assenza, da `to.nameLocal`/`to.name`), non richiede una
+verifica manuale preventiva perché è una semplice ricerca testuale:
+`https://map.naver.com/v5/search/{encodeURIComponent(query)}`.
 
 ### 11.3 Sicurezza link esterni
 

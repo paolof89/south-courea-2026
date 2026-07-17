@@ -89,6 +89,55 @@ function getAllItems(days) {
   return all;
 }
 
+/** Decorative emoji icon per transfer mode (always paired with a text label). */
+function iconForTransferMode(mode) {
+  const map = {
+    walk: '🚶',
+    subway: '🚇',
+    train: '🚆',
+    bus: '🚌',
+    taxi: '🚕',
+    car: '🚗',
+    plane: '✈️',
+    ferry: '⛴️',
+  };
+  return map[mode] || '🚏';
+}
+
+/** Capitalize the first letter of a string (used for connector summary text). */
+function capitalize(text) {
+  if (!text) return text;
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+/**
+ * Format a money object for display. Supports both the legacy shape
+ * `{ amount, currency, display }` and the v2 shape that also carries
+ * `estimated`. Returns null when there is nothing displayable.
+ */
+function formatMoney(money) {
+  if (!money) return null;
+  if (money.display) return money.display;
+  if (money.amount != null && money.currency) return `${money.amount} ${money.currency}`;
+  return null;
+}
+
+/** Format a transfer stop (from/to) as "Name (nameLocal)" when a local name is known. */
+function formatStop(stop) {
+  if (!stop || !stop.name) return null;
+  return stop.nameLocal ? `${stop.name} (${stop.nameLocal})` : stop.name;
+}
+
+/**
+ * Build a Naver Map search URL for a transfer, per SPEC §20.3.
+ * Falls back from `naverQuery` to the destination's local name, then its name.
+ */
+function buildNaverMapsUrl(t) {
+  const query = (t && t.naverQuery) || (t && t.to && (t.to.nameLocal || t.to.name));
+  if (!query) return null;
+  return `https://map.naver.com/v5/search/${encodeURIComponent(query)}`;
+}
+
 /** Build a Google Maps search URL from a location object. */
 function buildGoogleMapsSearchUrl(location) {
   if (!location) return null;
@@ -390,6 +439,8 @@ function renderDay(dayId) {
   let dayProgressBar = null;
 
   if (hasItems) {
+    const strip = buildTransportStrip(day.items);
+    if (strip) header.appendChild(strip);
     const { done, total } = countProgress(day.items);
     dayProgressBar = buildProgressBar(done, total, 'Tappe della giornata');
     header.appendChild(dayProgressBar);
@@ -448,6 +499,7 @@ function buildDayStats(items) {
   let sawNullTransfer = false;
   let sawNullDuration = false;
   const costByCurrency = new Map();
+  const estimatedCurrencies = new Set();
   let sawNullCost = false;
 
   for (const item of items) {
@@ -466,6 +518,7 @@ function buildDayStats(items) {
     if (item.cost && item.cost.amount != null && item.cost.currency) {
       const prevAmount = costByCurrency.get(item.cost.currency) || 0;
       costByCurrency.set(item.cost.currency, prevAmount + item.cost.amount);
+      if (item.cost.estimated) estimatedCurrencies.add(item.cost.currency);
     } else if (item.type !== 'transport') {
       sawNullCost = true;
     }
@@ -476,12 +529,40 @@ function buildDayStats(items) {
   parts.push(`Visite: ${visitMinutes} min${sawNullDuration ? ' (stima parziale)' : ''}`);
   if (costByCurrency.size > 0) {
     const costText = Array.from(costByCurrency.entries())
-      .map(([currency, amount]) => `${amount} ${currency}`)
+      .map(([currency, amount]) => `${amount} ${currency}${estimatedCurrencies.has(currency) ? ' \u2248' : ''}`)
       .join(' + ');
     parts.push(`Costo: ${costText}${sawNullCost ? ' (stima parziale)' : ''}`);
   }
 
   return el('p', 'day-header__stats', parts.join(' · '));
+}
+
+/**
+ * One-line "what am I riding today" chain built from each item's transfer
+ * (e.g. "🚕 → 🚌 240 → 🚶 → 🚌 240 → 🚕"). Tapping it scrolls to the first
+ * transfer connector in the timeline.
+ */
+function buildTransportStrip(items) {
+  const transfers = items
+    .map((item) => item.transferFromPrevious)
+    .filter((t) => t && t.mode);
+  if (transfers.length === 0) return null;
+
+  const btn = el('button', 'transport-strip');
+  btn.type = 'button';
+  const chainText = transfers
+    .map((t) => (t.line ? `${iconForTransferMode(t.mode)} ${t.line}` : iconForTransferMode(t.mode)))
+    .join(' \u2192 ');
+  btn.textContent = chainText;
+  btn.setAttribute(
+    'aria-label',
+    `Spostamenti della giornata: ${transfers.map((t) => labelForTransferMode(t.mode)).join(', ')}. Tocca per andare al primo spostamento.`,
+  );
+  btn.addEventListener('click', () => {
+    const target = document.getElementById('first-transfer-connector');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  return btn;
 }
 
 /** Checkbox chips to filter the timeline by item type. Session-only, not persisted. */
@@ -548,12 +629,88 @@ function wireSwipeNavigation(articleEl, prevDay, nextDay) {
 }
 
 
+/**
+ * Render the connector between the previous item and this one: mode icon,
+ * line, duration, frequency, fare, T-money/estimate chips, from → to stops
+ * (with local script names), any free-text notes, and booking/Naver buttons
+ * when the corresponding data is present. All fields are optional (schema v2
+ * is backward compatible with the legacy `{ mode, durationMinutes, notes }`
+ * shape).
+ */
+function renderTransferConnector(t) {
+  const mode = t.mode || null;
+  const wrap = el('div', `transfer-connector${mode ? ` transfer-connector--${mode}` : ''}`);
+
+  const summary = el('p', 'transfer-connector__summary');
+  const icon = el('span', 'transfer-connector__icon', iconForTransferMode(mode));
+  icon.setAttribute('aria-hidden', 'true');
+  summary.appendChild(icon);
+
+  const modeLabel = mode ? labelForTransferMode(mode) : null;
+  const headline = t.line
+    ? `${capitalize(modeLabel) || 'Trasferimento'} ${t.line}`
+    : capitalize(modeLabel) || 'Spostamento dalla tappa precedente';
+  summary.appendChild(document.createTextNode(headline));
+
+  const metaParts = [];
+  if (t.durationMinutes != null) metaParts.push(`${t.durationMinutes} min`);
+  if (t.frequency) metaParts.push(t.frequency);
+  const fareText = formatMoney(t.fare);
+  if (fareText) metaParts.push(fareText);
+  if (metaParts.length > 0) {
+    summary.appendChild(document.createTextNode(` \u00b7 ${metaParts.join(' \u00b7 ')}`));
+  }
+  wrap.appendChild(summary);
+
+  const chips = [];
+  if (t.tmoney === true) chips.push(['chip--tmoney-yes', 'T-money \u2713']);
+  else if (t.tmoney === false) chips.push(['chip--tmoney-no', 'T-money \u2717']);
+  if (t.estimated || (t.fare && t.fare.estimated)) chips.push(['chip--estimate', '\u2248 stima']);
+  if (chips.length > 0) {
+    const chipsWrap = el('div', 'transfer-connector__chips');
+    for (const [modifierClass, label] of chips) {
+      chipsWrap.appendChild(el('span', `chip ${modifierClass}`, label));
+    }
+    wrap.appendChild(chipsWrap);
+  }
+
+  const routeText = [formatStop(t.from), formatStop(t.to)].filter(Boolean).join(' \u2192 ');
+  if (routeText) {
+    wrap.appendChild(el('p', 'transfer-connector__route', routeText));
+  }
+
+  if (t.notes) {
+    wrap.appendChild(el('p', 'transfer-connector__notes', t.notes));
+  }
+
+  const actions = [];
+  if (t.booking && t.booking.url) {
+    actions.push({ href: t.booking.url, label: t.booking.label || 'Prenota' });
+  }
+  const naverUrl = buildNaverMapsUrl(t);
+  if (naverUrl) actions.push({ href: naverUrl, label: 'Naver' });
+  if (actions.length > 0) {
+    const actionsWrap = el('div', 'transfer-connector__actions');
+    for (const action of actions) {
+      const link = el('a', 'transfer-connector__btn', action.label);
+      link.href = action.href;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      actionsWrap.appendChild(link);
+    }
+    wrap.appendChild(actionsWrap);
+  }
+
+  return wrap;
+}
+
 function renderTimeline(items, options = {}) {
   const { nextUpId = null, onToggle = null } = options;
   const list = el('ol', 'timeline');
   list.setAttribute('aria-label', 'Tappe della giornata');
 
   const completed = getCompletedMap();
+  let firstTransferSeen = false;
 
   for (const item of items) {
     const type = item.type || 'visit';
@@ -563,14 +720,12 @@ function renderTimeline(items, options = {}) {
 
     // Transfer from previous (rendered above the item's own info)
     if (item.transferFromPrevious) {
-      const t = item.transferFromPrevious;
-      const parts = [];
-      if (t.mode) parts.push(labelForTransferMode(t.mode));
-      if (t.durationMinutes != null) parts.push(`${t.durationMinutes} min`);
-      const transferText = parts.length
-        ? `Spostamento: ${parts.join(' · ')}`
-        : 'Spostamento dalla tappa precedente';
-      li.appendChild(el('p', 'timeline-item__transfer', transferText));
+      const connector = renderTransferConnector(item.transferFromPrevious);
+      if (!firstTransferSeen) {
+        connector.id = 'first-transfer-connector';
+        firstTransferSeen = true;
+      }
+      li.appendChild(connector);
     }
 
     if (nextUpId === item.id) {
@@ -598,12 +753,28 @@ function renderTimeline(items, options = {}) {
       );
     }
 
-    if (item.cost && item.cost.display) {
-      li.appendChild(el('p', 'timeline-item__meta', `Costo: ${item.cost.display}`));
+    const costText = formatMoney(item.cost);
+    if (costText) {
+      li.appendChild(
+        el('p', 'timeline-item__meta', `Costo: ${costText}${item.cost.estimated ? ' ≈' : ''}`),
+      );
+    }
+
+    if (Array.isArray(item.notes) && item.notes.length > 0) {
+      const notesList = el('ul', 'timeline-item__notes');
+      for (const note of item.notes) {
+        notesList.appendChild(el('li', null, note));
+      }
+      li.appendChild(notesList);
     }
 
     if (item.status === 'uncertain') {
       li.appendChild(el('span', 'timeline-item__uncertain', 'Da verificare'));
+      if (item.sourceText) {
+        li.appendChild(
+          el('p', 'timeline-item__source-text', `Testo originale: «${item.sourceText}»`),
+        );
+      }
     }
 
     const mapUrl = buildGoogleMapsSearchUrl(item.location);

@@ -69,6 +69,8 @@ Each stop/activity in a day's timeline:
 - `durationMinutes`: integer minutes of visit/activity duration, or `null`.
   Keep this separate from transfer time (see `transferFromPrevious`).
 - `cost`: `null`, or an object `{ "amount": number, "currency": "EUR", "display": "€9" }` — only when the amount is actually known/confirmed.
+  Optional `"estimated": true` (schema v2) marks a planning estimate rather
+  than a confirmed price; the UI shows a neutral "≈" marker for it.
 - `status`: one of `confirmed`, `transcribed`, `uncertain`, `placeholder`.
   - Use `uncertain` when the source text/photo is ambiguous or hard to read;
     also fill `sourceText` with the original (dubious) wording in that case.
@@ -78,6 +80,16 @@ Each stop/activity in a day's timeline:
 - `transferFromPrevious`: `null` for the first item of the day or when there
   is no transfer, otherwise `{ "mode": ..., "durationMinutes": ..., "notes": ... }`.
   - `mode`: one of `walk`, `subway`, `train`, `bus`, `taxi`, `car`, `plane`, `ferry`.
+  - Schema v2 (optional, backward compatible — see [SPEC.md](../../SPEC.md)
+    §6.2): may also include `line`, `from`/`to` (`{ name, nameLocal }`),
+    `frequency`, `fare` (money object), `tmoney` (`true`/`false`/`null`),
+    `booking` (`{ label, url }`, `url` must be `https:`; only for intercity
+    bus/train/plane bookings — city buses/metro use `tmoney` instead),
+    `naverQuery`, and `estimated`. Only fill fields you can actually
+    transcribe from the source notes — leave them absent/`null` rather than
+    guessing. Set `estimated: true` only for planning estimates that are
+    explicitly not yet verified on the ground; never silently upgrade an
+    estimate to a confirmed fact.
 - `notes`: array of strings for extra unstructured remarks; `[]` if none.
 
 ### `location` object
