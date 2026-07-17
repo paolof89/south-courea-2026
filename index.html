@@ -16,11 +16,25 @@
 
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a class="site-header__title" href="#/">Corea 2026</a>
+      <div class="site-header__row">
+        <a class="site-header__title" href="#/">Corea 2026</a>
+        <button
+          type="button"
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-pressed="false"
+          aria-label="Attiva tema scuro"
+        ><span aria-hidden="true">🌙</span></button>
+      </div>
       <p class="site-header__period">26 luglio – 13 agosto 2026</p>
       <p class="connection-status" id="connection-status" aria-live="polite" hidden></p>
     </div>
   </header>
+
+  <div id="update-banner" class="update-banner" role="status" hidden>
+    <p class="update-banner__text">È disponibile un aggiornamento dell'app.</p>
+    <button type="button" id="update-banner__btn" class="update-banner__btn">Aggiorna</button>
+  </div>
 
   <main id="main" class="main" tabindex="-1">
     <p class="loading" id="loading">Caricamento itinerario…</p>
@@ -29,6 +43,7 @@
   <footer class="site-footer" role="contentinfo">
     <p>Sito statico — dati locali, nessun tracciamento.</p>
     <p id="last-updated" class="last-updated"></p>
+    <button type="button" id="reset-completed" class="reset-completed">Azzera tappe completate</button>
   </footer>
 
   <script type="module" src="./assets/js/app.js"></script>

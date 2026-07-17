@@ -4,7 +4,7 @@
 
 'use strict';
 
-const CACHE_NAME = 'korea-2026-v1';
+const CACHE_NAME = 'korea-2026-v2';
 const DATA_URL = './data/itinerary.json';
 
 // App shell: files needed for the site to boot offline.
@@ -19,12 +19,16 @@ const APP_SHELL = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting()),
-  );
+  // Do not call skipWaiting() here: let the new worker stay in 'waiting' state
+  // so the app can show an "update available" banner and let the user decide
+  // when to activate it (see the 'message' listener below).
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {
