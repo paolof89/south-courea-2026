@@ -41,6 +41,35 @@
           "notes": []
         },
         {
+          "id": "2026-07-26-hotel-myeongdong",
+          "time": null,
+          "type": "hotel",
+          "title": "Hotel zona Myeongdong",
+          "description": "Check-in. Nome/costo hotel poco leggibili nella nota originale.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "uncertain",
+          "location": {
+            "name": "Hotel zona Myeongdong",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Myeongdong, Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "train",
+            "durationMinutes": 55,
+            "notes": "AREX fino a Seoul Station (~50 min, ~€8), poi metro linea 4 fino a Myeongdong, ~5 min a piedi"
+          },
+          "notes": [
+            "Costo annotato in modo dubbio: [31 €?]"
+          ],
+          "sourceText": "[31 €?]"
+        },
+        {
           "id": "2026-07-26-myeongdong-night-market",
           "time": "20:15",
           "type": "market",
@@ -65,6 +94,32 @@
             "notes": null
           },
           "notes": []
+        },
+        {
+          "id": "2026-07-26-daiso-myeongdong",
+          "time": "21:15",
+          "type": "market",
+          "title": "Daiso Myeongdong",
+          "description": "12 piani + negozi vari.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Daiso Myeongdong",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daiso Myeongdong Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 5,
+            "notes": null
+          },
+          "notes": []
         }
       ]
     },
@@ -73,30 +128,470 @@
       "dayNumber": 2,
       "date": "2026-07-27",
       "city": "Seoul",
-      "summary": null,
+      "summary": "Palazzi e mercati di Seoul",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-27-gyeongbokgung",
+          "time": "09:00",
+          "type": "visit",
+          "title": "Gyeongbokgung Palace",
+          "description": "Palazzo reale. 10:00 cambio della guardia; 11:00 visita guidata in inglese.",
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 1.7,
+            "currency": "EUR",
+            "display": "€1,70"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Gyeongbokgung Palace",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gyeongbokgung Palace Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-07-27-tongin-market",
+          "time": "13:30",
+          "type": "market",
+          "title": "Tongin Market",
+          "description": "Mercato delle monete.",
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Tongin Market",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Tongin Market Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-27-hong-geon-ik-house",
+          "time": "15:30",
+          "type": "visit",
+          "title": "Hong Geon-ik's House",
+          "description": null,
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "uncertain",
+          "location": {
+            "name": "Hong Geon-ik's House",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hong Geon-ik House Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": "Passando per Seochon Village"
+          },
+          "notes": [
+            "Nota originale ambigua"
+          ],
+          "sourceText": "case chiuse, gratis, casual"
+        },
+        {
+          "id": "2026-07-27-jogyesa-temple",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Jogyesa Temple",
+          "description": "Tempio buddista. Ingresso gratuito.",
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jogyesa Temple",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jogyesa Temple Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-27-cheonggyecheon",
+          "time": "17:30",
+          "type": "visit",
+          "title": "Cheonggyecheon",
+          "description": "Passeggiata lungo il torrente.",
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Cheonggyecheon Stream",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Cheonggyecheon Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-27-gwangjang-market",
+          "time": "19:00",
+          "type": "market",
+          "title": "Gwangjang Market",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gwangjang Market",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gwangjang Market Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-07-28",
       "dayNumber": 3,
       "date": "2026-07-28",
       "city": "Seoul",
-      "summary": null,
+      "summary": "Palazzi e villaggi hanok",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-28-changdeokgung",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Changdeokgung Palace",
+          "description": "10:15 visita guidata al palazzo; 11:30 visita ai giardini.",
+          "durationMinutes": 180,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Changdeokgung Palace",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Changdeokgung Palace Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-07-28-bukchon-hanok",
+          "time": "13:15",
+          "type": "visit",
+          "title": "Bukchon Hanok Village",
+          "description": "Pranzo + passeggiata.",
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Bukchon Hanok Village",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Bukchon Hanok Village Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 35,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-28-ikseondong-hanok",
+          "time": "15:30",
+          "type": "visit",
+          "title": "Ikseondong Hanok Village",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Ikseondong Hanok Village",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Ikseondong Hanok Village Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-28-changgyeonggung",
+          "time": "16:45",
+          "type": "visit",
+          "title": "Changgyeonggung Palace",
+          "description": "Palazzo con serra.",
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Changgyeonggung Palace",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Changgyeonggung Palace Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-28-seoul-central-market",
+          "time": "18:30",
+          "type": "market",
+          "title": "Seoul Central Market",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seoul Central Market",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seoul Central Market",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-28-ddp",
+          "time": "20:15",
+          "type": "visit",
+          "title": "Dongdaemun Design Plaza",
+          "description": "Solo un giretto per digerire.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Dongdaemun Design Plaza",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Dongdaemun Design Plaza Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 7,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-07-29",
       "dayNumber": 4,
       "date": "2026-07-29",
       "city": "Seoul",
-      "summary": null,
+      "summary": "Namsan, mercati e Hongdae",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-29-namsan-cable-car",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Funivia di Namsan",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 8.58,
+            "currency": "EUR",
+            "display": "€8,58"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Namsan Cable Car",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Namsan Cable Car Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-07-29-namdaemun-market",
+          "time": "12:15",
+          "type": "market",
+          "title": "Namdaemun Market",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Namdaemun Market",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Namdaemun Market Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-29-seoullo-7017",
+          "time": "14:30",
+          "type": "visit",
+          "title": "Seoullo 7017",
+          "description": "Passeggiata sulla camminata ricavata dagli ex binari.",
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seoullo 7017",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seoullo 7017 Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 10,
+            "notes": "Alternativa: bus ~30 min oppure taxi ~10 min"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-29-war-memorial",
+          "time": "15:30",
+          "type": "visit",
+          "title": "War Memorial of Korea",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "War Memorial of Korea",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "War Memorial of Korea Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-29-hongdae",
+          "time": "18:00",
+          "type": "visit",
+          "title": "Hongdae",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Hongdae",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hongdae Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-07-30",
@@ -105,98 +600,1803 @@
       "city": "Seoul",
       "summary": "Escursione a Suwon",
       "transferSummary": "Seoul → treno → Suwon → treno → Seoul",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-30-hwaseong-fortress",
+          "time": "09:30",
+          "type": "visit",
+          "title": "Fortezza Hwaseong",
+          "description": "Ingresso gratuito.",
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Hwaseong Fortress",
+            "city": "Suwon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hwaseong Fortress Suwon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-07-30-temporary-palace",
+          "time": "11:15",
+          "type": "visit",
+          "title": "Temporary Palace (Haenggung)",
+          "description": null,
+          "durationMinutes": 90,
+          "cost": {
+            "amount": 1.13,
+            "currency": "EUR",
+            "display": "€1,13"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Hwaseong Haenggung",
+            "city": "Suwon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hwaseong Haenggung Suwon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-30-haenggung-gil",
+          "time": "13:00",
+          "type": "meal",
+          "title": "Passeggiata su Haenggung-gil e pranzo",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Haenggung-gil",
+            "city": "Suwon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haenggung-gil Suwon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 7,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-30-mr-toilet-house",
+          "time": "15:30",
+          "type": "visit",
+          "title": "Mr. Toilet House",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Mr. Toilet House",
+            "city": "Suwon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Mr Toilet House Suwon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 20,
+            "notes": "Alternativa: bus ~25 min"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-30-suwon-station",
+          "time": "17:00",
+          "type": "transport",
+          "title": "Stazione di Suwon",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Suwon Station",
+            "city": "Suwon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suwon Station",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": "Alternativa: taxi ~20 min"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-30-return-seoul",
+          "time": "19:00",
+          "type": "transport",
+          "title": "Ritorno a Seoul + cena",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seoul",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seoul Station",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "train",
+            "durationMinutes": null,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-07-31",
       "dayNumber": 6,
       "date": "2026-07-31",
       "city": "Andong",
-      "summary": "Trasferimento a Andong",
+      "summary": "Trasferimento a Andong e Hahoe Folk Village",
       "transferSummary": "Seoul → bus → Andong",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-07-31-arrival-andong",
+          "time": "11:15",
+          "type": "transport",
+          "title": "Arrivo ad Andong",
+          "description": "Lasciare gli zaini ai locker oppure alla stazione degli autobus. Prima parte della nota poco leggibile.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "uncertain",
+          "location": {
+            "name": "Andong",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Andong Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Prima parte dell'indicazione sulla stazione poco leggibile"
+          ],
+          "sourceText": "La prima parte della nota sulla stazione è poco leggibile"
+        },
+        {
+          "id": "2026-07-31-hahoe-folk-village",
+          "time": "12:30",
+          "type": "visit",
+          "title": "Hahoe Folk Village",
+          "description": "15:30 spettacolo delle maschere.",
+          "durationMinutes": 180,
+          "cost": {
+            "amount": 2.85,
+            "currency": "EUR",
+            "display": "€2,85"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Hahoe Folk Village",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hahoe Folk Village Andong",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-31-return-station-bags",
+          "time": "17:00",
+          "type": "transport",
+          "title": "Ritorno in stazione per riprendere gli zaini",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Andong Bus Terminal",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Andong Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-31-hotel-checkin",
+          "time": "17:45",
+          "type": "hotel",
+          "title": "Check-in in hotel",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Andong",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Andong hotel",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-31-andong-market",
+          "time": "18:15",
+          "type": "market",
+          "title": "Giro a piedi + cena all'Andong Market",
+          "description": "Eventuale.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Andong Market",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Andong Market",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-07-31-wolyeonggyo-bridge",
+          "time": "20:00",
+          "type": "visit",
+          "title": "Wolyeonggyo Bridge",
+          "description": "Escursione al ponte; spettacolo alle 20:00.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Wolyeonggyo Bridge",
+            "city": "Andong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Wolyeonggyo Bridge Andong",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-01",
       "dayNumber": 7,
       "date": "2026-08-01",
       "city": "Gyeongju",
-      "summary": "Trasferimento a Gyeongju",
+      "summary": "Trasferimento a Gyeongju, templi e centro",
       "transferSummary": "Andong → bus → Gyeongju",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-01-arrival-gyeongju",
+          "time": "11:30",
+          "type": "transport",
+          "title": "Arrivo a Gyeongju",
+          "description": "A piedi fino all'hotel per lasciare gli zaini.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gyeongju",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gyeongju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-01-bulguksa-temple",
+          "time": "13:30",
+          "type": "visit",
+          "title": "Bulguksa Temple",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 4.0,
+            "currency": "EUR",
+            "display": "€4"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Bulguksa Temple",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Bulguksa Temple Gyeongju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 15,
+            "notes": "Bus per il tempio verso le 12:30"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-01-seokguram-grotto",
+          "time": "16:00",
+          "type": "visit",
+          "title": "Seokguram Grotto",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": {
+            "amount": 4.0,
+            "currency": "EUR",
+            "display": "€4"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Seokguram Grotto",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seokguram Grotto Gyeongju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 20,
+            "notes": "Navetta, indicativamente alle 15:40"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-01-donggung-wolji",
+          "time": "18:00",
+          "type": "visit",
+          "title": "Donggung Palace e Wolji Pond",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Donggung Palace and Wolji Pond",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Donggung Palace Wolji Pond Gyeongju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 55,
+            "notes": "Ritorno al Bulguksa verso le 17:30 e rientro in città (~55 min in bus oppure taxi)"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-01-jungang-market",
+          "time": "19:45",
+          "type": "market",
+          "title": "Jungang Market",
+          "description": null,
+          "durationMinutes": 55,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jungang Market",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gyeongju Jungang Market",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 7,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-01-hwangnidan-gil",
+          "time": "20:45",
+          "type": "visit",
+          "title": "Hwangnidan-gil Street",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Hwangnidan-gil",
+            "city": "Gyeongju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hwangnidan-gil Gyeongju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-02",
       "dayNumber": 8,
       "date": "2026-08-02",
       "city": "Daegu",
-      "summary": "Trasferimento a Daegu",
+      "summary": "Trasferimento a Daegu e centro storico",
       "transferSummary": "Gyeongju → Daegu",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-02-arrival-daegu",
+          "time": "11:30",
+          "type": "transport",
+          "title": "Arrivo a Daegu",
+          "description": "Deposito bagagli in hotel.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Daegu",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-02-yangnyeongsi-museum",
+          "time": "12:30",
+          "type": "visit",
+          "title": "Yangnyeongsi Museum of Oriental Medicine",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Yangnyeongsi Museum of Oriental Medicine",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yangnyeongsi Museum Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-02-herbal-market",
+          "time": "14:00",
+          "type": "market",
+          "title": "Herbal Medicine Wholesale Market",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Yangnyeongsi Herbal Medicine Market",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yangnyeongsi Herbal Medicine Market Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 10,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-02-gyesan-church",
+          "time": "15:30",
+          "type": "visit",
+          "title": "Gyesan Catholic Church",
+          "description": null,
+          "durationMinutes": 15,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gyesan Catholic Church",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gyesan Catholic Church Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 10,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-02-modern-history-street",
+          "time": "15:55",
+          "type": "visit",
+          "title": "Modern History Street (Percorso 2)",
+          "description": "Comprende: chiesa presbiteriana, residenze dei missionari, casa di Seo Sang-don. Ultima tappa interna poco leggibile.",
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "uncertain",
+          "location": {
+            "name": "Daegu Modern History Street",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daegu Modern History Street",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Ultima tappa interna del percorso poco leggibile"
+          ],
+          "sourceText": "[ultima voce poco leggibile]"
+        },
+        {
+          "id": "2026-08-02-dongseong-ro",
+          "time": "17:30",
+          "type": "visit",
+          "title": "Passeggiata su Dongseong-ro",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Dongseong-ro",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Dongseong-ro Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 10,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-02-seomun-night-market",
+          "time": "19:00",
+          "type": "market",
+          "title": "Seomun Night Market",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seomun Night Market",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seomun Night Market Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-03",
       "dayNumber": 9,
       "date": "2026-08-03",
       "city": "Busan",
-      "summary": "Trasferimento a Busan",
+      "summary": "Trasferimento a Busan, Gukje e BIFF",
       "transferSummary": "Daegu → bus → Busan",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-03-seomun-market",
+          "time": "10:00",
+          "type": "market",
+          "title": "Seomun Market",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seomun Market",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seomun Market Daegu",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-hotel-bags",
+          "time": "12:15",
+          "type": "transport",
+          "title": "Hotel per riprendere i bagagli",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Daegu",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daegu hotel",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 25,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-daegu-station",
+          "time": "13:00",
+          "type": "transport",
+          "title": "Stazione di Daegu",
+          "description": "Treno per Busan.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Daegu Station",
+            "city": "Daegu",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daegu Station",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-busan-station",
+          "time": "15:30",
+          "type": "transport",
+          "title": "Stazione di Busan",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Busan Station",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Busan Station",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "train",
+            "durationMinutes": null,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-hotel-checkin-busan",
+          "time": "16:00",
+          "type": "hotel",
+          "title": "Hotel per check-in",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Busan",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Busan hotel",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-yongdusan-park",
+          "time": "17:30",
+          "type": "visit",
+          "title": "Yongdusan Park",
+          "description": null,
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Yongdusan Park",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yongdusan Park Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-gukje-market",
+          "time": "18:15",
+          "type": "market",
+          "title": "Gukje Market",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gukje Market",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gukje Market Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 12,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-03-biff-square",
+          "time": "20:00",
+          "type": "market",
+          "title": "BIFF Square",
+          "description": "Street food + shopping.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "BIFF Square",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "BIFF Square Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 5,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-04",
       "dayNumber": 10,
       "date": "2026-08-04",
       "city": "Busan",
-      "summary": null,
+      "summary": "Gamcheon, Songdo e Jagalchi",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-04-gamcheon-village",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Gamcheon Culture Village",
+          "description": "Caccia al tesoro.",
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gamcheon Culture Village",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gamcheon Culture Village Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-songdo-beach",
+          "time": "12:30",
+          "type": "visit",
+          "title": "Songdo Beach",
+          "description": "Passeggiata sulla spiaggia.",
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Songdo Beach",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Songdo Beach Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-songdo-skywalk",
+          "time": "13:00",
+          "type": "visit",
+          "title": "Songdo Sky Walk",
+          "description": null,
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Songdo Skywalk",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Songdo Skywalk Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 5,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-lunch-songdo",
+          "time": "13:45",
+          "type": "meal",
+          "title": "Pranzo",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Songdo",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Songdo Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 5,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-songdo-cable-car",
+          "time": "14:00",
+          "type": "visit",
+          "title": "Songdo Beach Cable Car",
+          "description": "Annotazione secondaria poco leggibile: Songdo Sky Park [?].",
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 12.0,
+            "currency": "EUR",
+            "display": "€12"
+          },
+          "status": "uncertain",
+          "location": {
+            "name": "Songdo Bay Cable Car",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Songdo Bay Cable Car Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Alcune annotazioni secondarie della cable car poco leggibili"
+          ],
+          "sourceText": "Songdo Sky Park [?]"
+        },
+        {
+          "id": "2026-08-04-jagalchi-waterfront",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Passeggiata sul lungomare di Jagalchi",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jagalchi",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jagalchi Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": "Spostamento ~30 min"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-jagalchi-market",
+          "time": "17:30",
+          "type": "market",
+          "title": "Jagalchi Fish Market",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jagalchi Fish Market",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jagalchi Fish Market Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-04-seomyeon-shopping",
+          "time": "20:15",
+          "type": "market",
+          "title": "Rientro a Seomyeon + shopping",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seomyeon",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seomyeon Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 40,
+            "notes": "Autobus o metro ~40 min"
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-05",
       "dayNumber": 11,
       "date": "2026-08-05",
       "city": "Busan",
-      "summary": null,
+      "summary": "Cooking class e Haeundae",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-05-cooking-class",
+          "time": "10:00",
+          "type": "meal",
+          "title": "Cooking class",
+          "description": null,
+          "durationMinutes": 180,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Busan",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Busan cooking class",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-05-haeundae-beach",
+          "time": "13:30",
+          "type": "visit",
+          "title": "Passeggiata a Haeundae Beach",
+          "description": null,
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Haeundae Beach",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haeundae Beach Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 25,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-05-haeundae-blue-line",
+          "time": "14:15",
+          "type": "visit",
+          "title": "Haeundae Blue Line",
+          "description": "Da Mipo Station a Cheongsapo. Sky Capsule.",
+          "durationMinutes": 45,
+          "cost": {
+            "amount": 30.0,
+            "currency": "EUR",
+            "display": "€30"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Haeundae Blue Line Park",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haeundae Blue Line Park Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Sky Capsule €30"
+          ]
+        },
+        {
+          "id": "2026-08-05-cheongsapo-skywalk",
+          "time": "15:00",
+          "type": "visit",
+          "title": "Cheongsapo Daritdol Skywalk",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Cheongsapo Daritdol Skywalk",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Cheongsapo Daritdol Skywalk Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-05-haeundae-market",
+          "time": "17:00",
+          "type": "market",
+          "title": "Haeundae Traditional Market",
+          "description": null,
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Haeundae Traditional Market",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haeundae Traditional Market Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 40,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-05-haeridan-gil",
+          "time": "19:00",
+          "type": "visit",
+          "title": "Passeggiata su Haeridan-gil Street",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Haeridan-gil",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haeridan-gil Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-06",
       "dayNumber": 12,
       "date": "2026-08-06",
       "city": "Busan",
-      "summary": null,
+      "summary": "Yonggungsa e Geumgang",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-06-yonggungsa-temple",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Haedong Yonggungsa Temple",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Haedong Yonggungsa Temple",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Haedong Yonggungsa Temple Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-06-bujeon-market",
+          "time": "13:00",
+          "type": "market",
+          "title": "Bujeon Market",
+          "description": null,
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Bujeon Market",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Bujeon Market Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 60,
+            "notes": "Autobus + metro ~1h"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-06-citizens-park",
+          "time": "15:00",
+          "type": "visit",
+          "title": "Busan Citizens Park",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Busan Citizens Park",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Busan Citizens Park",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-06-geumgang-cable-car",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Geumgang Cable Car + Park",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Geumgang Park Cable Car",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Geumgang Park Cable Car Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-06-seomyeon-market",
+          "time": "18:00",
+          "type": "market",
+          "title": "Seomyeon Market",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Seomyeon Market",
+            "city": "Busan",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seomyeon Market Busan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-07",
       "dayNumber": 13,
       "date": "2026-08-07",
       "city": "Jeonju",
-      "summary": "Trasferimento a Jeonju",
+      "summary": "Trasferimento a Jeonju e Hanok Village",
       "transferSummary": "Busan → bus → Jeonju",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-07-jeonju-hanok-village",
+          "time": "12:45",
+          "type": "visit",
+          "title": "Jeonju Hanok Village",
+          "description": "Passeggiata.",
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jeonju Hanok Village",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeonju Hanok Village",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-jeolla-gamyeong",
+          "time": "14:00",
+          "type": "visit",
+          "title": "Jeolla Gamyeong",
+          "description": "Visita guidata.",
+          "durationMinutes": 45,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jeolla Gamyeong",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeolla Gamyeong Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 10,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-gyeonggijeon-shrine",
+          "time": "15:00",
+          "type": "visit",
+          "title": "Gyeonggijeon Shrine",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gyeonggijeon Shrine",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gyeonggijeon Shrine Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-jeondong-cathedral",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Jeondong Catholic Cathedral",
+          "description": null,
+          "durationMinutes": 25,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jeondong Catholic Cathedral",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeondong Catholic Cathedral Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 3,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-pungnammun-gate",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Pungnammun Gate",
+          "description": "Orario coincidente con la tappa precedente come da nota originale.",
+          "durationMinutes": 20,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Pungnammun Gate",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Pungnammun Gate Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 3,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-omokdae-pavilion",
+          "time": "17:00",
+          "type": "visit",
+          "title": "Omokdae Pavilion",
+          "description": "Vista sulla città.",
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Omokdae Pavilion",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Omokdae Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-jaman-mural-village",
+          "time": "17:45",
+          "type": "visit",
+          "title": "Jaman Mural Village",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jaman Mural Village",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jaman Mural Village Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-nambu-market",
+          "time": "19:00",
+          "type": "market",
+          "title": "Nambu Market",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Nambu Market",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Nambu Market Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 15,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-07-jeonjucheon-street",
+          "time": "21:00",
+          "type": "visit",
+          "title": "Passeggiata lungo il fiume verso Jeonjucheon Street",
+          "description": null,
+          "durationMinutes": 30,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Jeonjucheon Street",
+            "city": "Jeonju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeonjucheon Jeonju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-08",
       "dayNumber": 14,
       "date": "2026-08-08",
       "city": "Suncheon",
-      "summary": "Trasferimento a Suncheon",
+      "summary": "Trasferimento a Suncheon, giardino e baia",
       "transferSummary": "Jeonju → bus → Suncheon",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-08-bus-suncheon",
+          "time": "11:00",
+          "type": "transport",
+          "title": "Autobus",
+          "description": null,
+          "durationMinutes": 25,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Suncheon",
+            "city": "Suncheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suncheon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-08-suncheon-bay-garden",
+          "time": "11:30",
+          "type": "visit",
+          "title": "Suncheon Bay National Garden",
+          "description": "Visita 2h + pranzo 1h.",
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 9.0,
+            "currency": "EUR",
+            "display": "€9"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Suncheon Bay National Garden",
+            "city": "Suncheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suncheon Bay National Garden",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": []
+        },
+        {
+          "id": "2026-08-08-drama-filming-set",
+          "time": "15:00",
+          "type": "visit",
+          "title": "Drama Filming Set",
+          "description": null,
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Suncheon Drama Filming Set",
+            "city": "Suncheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suncheon Drama Filming Set",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 12,
+            "notes": "Alternativa: autobus ~1h"
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-08-suncheon-wetland",
+          "time": "16:30",
+          "type": "visit",
+          "title": "Suncheon Bay Wetland Reserve",
+          "description": null,
+          "durationMinutes": 120,
+          "cost": {
+            "amount": 6.0,
+            "currency": "EUR",
+            "display": "€6"
+          },
+          "status": "transcribed",
+          "location": {
+            "name": "Suncheonman Bay Wetland Reserve",
+            "city": "Suncheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suncheon Bay Wetland Reserve",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": 19,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-08-dinner-hotel",
+          "time": "19:00",
+          "type": "meal",
+          "title": "Cena + hotel",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Suncheon",
+            "city": "Suncheon",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Suncheon",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        }
+      ]
     },
     {
       "id": "2026-08-09",
@@ -205,38 +2405,759 @@
       "city": "Jeju",
       "summary": "Trasferimento a Jeju via Boseong e Gwangju",
       "transferSummary": "Suncheon → bus → Boseong → bus → Gwangju → aereo → Jeju",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-09-bus-suncheon-boseong",
+          "time": "08:30",
+          "type": "transport",
+          "title": "Suncheon Bus Terminal → Boseong",
+          "description": "Lasciare lo zaino nei locker del terminal di Boseong.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Boseong Intercity Bus Terminal",
+            "city": "Boseong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Boseong Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "~1h (stima) · ~₩6.500–9.400 · orario da confermare"
+          },
+          "notes": [
+            "Prenotazione bus: bustago.or.kr (alternativa treno: letskorail.com)",
+            "Orario esatto da confermare su Naver/bustago"
+          ]
+        },
+        {
+          "id": "2026-08-09-daehan-dawon",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Boseong Green Tea Field (Daehan Dawon)",
+          "description": "Filari di tè, sentiero panoramico, sala da tè. Pranzo veg in loco: noodles freddi, bibimbap e gelato al tè verde.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Daehan Dawon Boseong Green Tea Plantation",
+            "city": "Boseong",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daehan Dawon Boseong Green Tea Plantation",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "Dal terminal ~10 min (stima) · ~₩8.000–10.000"
+          },
+          "notes": [
+            "Durata stimata ~2h",
+            "Ingresso stimato ~₩4.000 (~€3), da verificare"
+          ]
+        },
+        {
+          "id": "2026-08-09-bus-boseong-gwangju",
+          "time": "12:30",
+          "type": "transport",
+          "title": "Boseong → Gwangju U-Square",
+          "description": "Recupero zaino al terminal prima di partire.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Gwangju U-Square Bus Terminal",
+            "city": "Gwangju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "U-Square Gwangju Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "~1h20 (stima) · ~₩7.100"
+          },
+          "notes": [
+            "Prenotazione bus: bustago.or.kr",
+            "All'arrivo a U-Square: deposito zaini nei locker (recupero nel tardo pomeriggio)"
+          ]
+        },
+        {
+          "id": "2026-08-09-acc-gwangju",
+          "time": "14:15",
+          "type": "visit",
+          "title": "ACC + Democracy Square",
+          "description": "National Asian Culture Center, complesso in gran parte sotterraneo sull'ex sede provinciale (sito della rivolta del 18 maggio).",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "National Asian Culture Center",
+            "city": "Gwangju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Asia Culture Center Gwangju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "Da U-Square ~10 min (stima)"
+          },
+          "notes": [
+            "Durata stimata ~1h30"
+          ]
+        },
+        {
+          "id": "2026-08-09-yangnim-dong",
+          "time": "16:15",
+          "type": "visit",
+          "title": "Yangnim-dong + Penguin Village",
+          "description": "Quartiere storico pedonale: case dei missionari, murales, caffè.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Yangnim-dong",
+            "city": "Gwangju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yangnim-dong Gwangju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": null,
+            "notes": "Metro Linea 1 (Culture Complex → Namgwangju) ~15 min (stima)"
+          },
+          "notes": [
+            "Durata stimata ~1h30",
+            "Recupero zaini a U-Square prima dell'aeroporto"
+          ]
+        },
+        {
+          "id": "2026-08-09-flight-kwj-cju",
+          "time": "19:50",
+          "type": "transport",
+          "title": "Volo Jin Air LJ455 · Gwangju → Jeju",
+          "description": "Partenza KWJ 19:50, arrivo CJU 20:45.",
+          "durationMinutes": 55,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Gwangju Airport (KWJ)",
+            "city": "Gwangju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gwangju Airport",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "Da U-Square all'aeroporto ~10 min (stima) · ₩13.000–17.000 · check-in ~18:45"
+          },
+          "notes": [
+            "Volo confermato"
+          ]
+        },
+        {
+          "id": "2026-08-09-hotel-tapdong",
+          "time": "21:00",
+          "type": "hotel",
+          "title": "Hotel zona Tapdong",
+          "description": "Check-in nella zona Tapdong/Dongmun.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Hotel zona Tapdong",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Tapdong, Jeju City",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "Dall'aeroporto CJU ~10 min (stima) · ~₩6.000"
+          },
+          "notes": [
+            "Sera: lungomare Tapdong, Yongduam, mercato notturno Dongmun"
+          ]
+        }
+      ]
     },
     {
       "id": "2026-08-10",
       "dayNumber": 16,
       "date": "2026-08-10",
       "city": "Jeju",
-      "summary": null,
+      "summary": "Costa sud: Seogwipo (cascate e Jusangjeolli)",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-10-bus-seogwipo",
+          "time": "09:00",
+          "type": "transport",
+          "title": "Jeju Bus Terminal → Seogwipo (Jungang Rotary)",
+          "description": "Bus express 181/182.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Seogwipo Jungang Rotary",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seogwipo Jungang Rotary",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "Da Tapdong al terminal in taxi ~7 min (~₩6.000–7.000); bus 181/182 ~55 min · ₩2.000–3.000"
+          },
+          "notes": [
+            "Bus 181/182 ogni ~35–40 min; T-money"
+          ]
+        },
+        {
+          "id": "2026-08-10-jeongbang-falls",
+          "time": "10:00",
+          "type": "visit",
+          "title": "Jeongbang Falls",
+          "description": "Cascata che precipita direttamente nel mare.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Jeongbang Waterfall",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeongbang Waterfall Seogwipo",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~22 min a piedi dal Jungang Rotary"
+          },
+          "notes": [
+            "Durata stimata ~45 min",
+            "Ingresso stimato ~₩2.000"
+          ]
+        },
+        {
+          "id": "2026-08-10-lee-jung-seop",
+          "time": "11:15",
+          "type": "visit",
+          "title": "Lee Jung-seop Art Street",
+          "description": "Museo opzionale.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Lee Jung-seop Art Street",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Lee Jung-seop Art Street Seogwipo",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~17 min a piedi da Jeongbang"
+          },
+          "notes": [
+            "Durata stimata ~45 min"
+          ]
+        },
+        {
+          "id": "2026-08-10-maeil-olle-market",
+          "time": "12:15",
+          "type": "meal",
+          "title": "Pranzo veg + Maeil Olle Market",
+          "description": "Street food: frutta hallabong, bindaetteok, tteok.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Seogwipo Maeil Olle Market",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Seogwipo Maeil Olle Market",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~4 min a piedi dall'Art Street"
+          },
+          "notes": [
+            "Durata stimata ~1h15"
+          ]
+        },
+        {
+          "id": "2026-08-10-cheonjiyeon-falls",
+          "time": "13:45",
+          "type": "visit",
+          "title": "Cheonjiyeon Falls",
+          "description": "Passeggiata nel parco fino alla cascata.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Cheonjiyeon Waterfall",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Cheonjiyeon Waterfall Seogwipo",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~12 min a piedi dal mercato"
+          },
+          "notes": [
+            "Durata stimata ~45 min",
+            "Ingresso stimato ~₩2.000"
+          ]
+        },
+        {
+          "id": "2026-08-10-jusangjeolli",
+          "time": "15:25",
+          "type": "visit",
+          "title": "Jusangjeolli",
+          "description": "Colonne basaltiche esagonali sul mare. Aperto 9:00–18:00.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Jusangjeolli Cliff",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Daepo Jusangjeolli Cliff Jungmun",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "Da Cheonjiyeon a piedi ~12 min a Jungang Rotary («중앙로터리») → bus 182/600 → fermata ICC («제주국제컴벤션센터») ~25 min · ₩1.200–2.000; poi ~10 min a piedi"
+          },
+          "notes": [
+            "Durata stimata ~1h",
+            "Ingresso stimato ~₩2.000",
+            "Naver: fermate «중앙로터리» e «제주국제컴벤션센터»"
+          ]
+        },
+        {
+          "id": "2026-08-10-cheonjeyeon-falls",
+          "time": "16:30",
+          "type": "optional",
+          "title": "Cheonjeyeon Falls (opzionale)",
+          "description": "Sistema di tre cascate nella gola boscosa.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Cheonjeyeon Waterfall",
+            "city": "Seogwipo",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Cheonjeyeon Waterfall Jungmun",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~15–20 min a piedi da Jusangjeolli"
+          },
+          "notes": [
+            "Opzionale",
+            "Durata stimata ~1h",
+            "Ingresso stimato ~₩2.500"
+          ]
+        },
+        {
+          "id": "2026-08-10-return-jeju-city",
+          "time": "17:45",
+          "type": "transport",
+          "title": "Rientro a Jeju City",
+          "description": "Dalle scogliere ~10 min a piedi alla fermata ICC; bus 600 (→ aeroporto, poi taxi) oppure 182 (→ Jeju Bus Terminal, poi taxi a Tapdong).",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Hotel zona Tapdong",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Tapdong, Jeju City",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "~1h · ₩4.500–5.000; poi taxi ~7–10 min a Tapdong"
+          },
+          "notes": [
+            "Naver: fermata «제주국제컴벤션센터»",
+            "Sera: lungomare Tapdong, Yongduam, mercato notturno Dongmun"
+          ]
+        }
+      ]
     },
     {
       "id": "2026-08-11",
       "dayNumber": 17,
       "date": "2026-08-11",
       "city": "Jeju",
-      "summary": null,
+      "summary": "Due opzioni alternative: Hallasan (traversata) oppure spiagge costa ovest",
       "transferSummary": null,
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-11-opt1-bus-yeongsil",
+          "time": "08:30",
+          "type": "optional",
+          "title": "[Opzione 1] Jeju Bus Terminal → Yeongsil (bus 240)",
+          "description": "Traversata Hallasan Yeongsil → Eorimok, senza prenotazione.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Yeongsil Ticket Office",
+            "city": "Jeju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yeongsil Hallasan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "Da Tapdong al terminal taxi ~7 min; bus 240 ~55 min · ₩1.150"
+          },
+          "notes": [
+            "OPZIONE 1 (Hallasan) – alternativa all'Opzione 3",
+            "Scendere al Yeongsil Ticket Office («영실»)",
+            "Partenza dall'hotel ~08:00; non oltre un bus delle ~09:00 (rovesci/caldo pomeridiani)"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt1-traverse",
+          "time": "09:45",
+          "type": "optional",
+          "title": "[Opzione 1] Traversata Yeongsil → Witse Oreum → Eorimok",
+          "description": "Salita sentiero Yeongsil fino al Witse Oreum (~1.700 m), poi discesa via Eorimok.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Witse Oreum Hallasan",
+            "city": "Jeju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Witse Oreum Hallasan",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "Dal ticket office al trailhead 2,5 km in salita: taxi ~₩5.000–6.000 (o ~45 min a piedi)"
+          },
+          "notes": [
+            "OPZIONE 1 (Hallasan)",
+            "Traversata ~10–11 km, 4–5 h; nessuna prenotazione",
+            "Estate: Yeongsil aperto 05:00–15:00, Witse Oreum entro le 15:00",
+            "Locker gratuiti all'Eorimok Visitor Center"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt1-bus-return",
+          "time": "14:45",
+          "type": "optional",
+          "title": "[Opzione 1] Eorimok → Jeju Bus Terminal (bus 240)",
+          "description": "Dal Visitor Center ~15 min a piedi alla fermata.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Jeju Bus Terminal",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeju Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "~45 min · ₩1.150; poi taxi ~7 min a Tapdong"
+          },
+          "notes": [
+            "OPZIONE 1 (Hallasan)",
+            "Naver: fermata «어리목입구»",
+            "Pomeriggio e sera liberi a Jeju City"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt3-bus-hallim",
+          "time": "09:30",
+          "type": "optional",
+          "title": "[Opzione 3] Jeju Bus Terminal → Hallim (bus 202)",
+          "description": "Giornata di spiagge sulla costa ovest.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Hallim",
+            "city": "Jeju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hallim Jeju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "Da Tapdong al terminal taxi ~7 min; bus 202 ~50 min · ₩1.200–1.500"
+          },
+          "notes": [
+            "OPZIONE 3 (costa ovest) – alternativa all'Opzione 1",
+            "Scendere a «한림공원» (Hallim Park) o «협재해수욕장» (Hyeopjae)"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt3-hallim-park",
+          "time": "10:30",
+          "type": "optional",
+          "title": "[Opzione 3] Hallim Park (opzionale)",
+          "description": "Giardino botanico + grotte Hyeopjae/Ssangyong.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Hallim Park",
+            "city": "Jeju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hallim Park Jeju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "~2 min a piedi dalla spiaggia"
+          },
+          "notes": [
+            "OPZIONE 3 (costa ovest)",
+            "Durata stimata ~1h30",
+            "Ingresso stimato ~₩12.000"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt3-beaches",
+          "time": "12:00",
+          "type": "optional",
+          "title": "[Opzione 3] Hyeopjae Beach + Geumneung Beach",
+          "description": "Nuoto, relax, pranzo veg nei locali fronte mare; vista sull'isola di Biyangdo.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Hyeopjae Beach",
+            "city": "Jeju",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hyeopjae Beach Jeju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "OPZIONE 3 (costa ovest)",
+            "Geumneung («금능해수욕장») di fronte a Hallim Park, più tranquilla",
+            "Tramonto a Hyeopjae ~19:30 (opzionale sosta ad Aewol al rientro, in alternativa)"
+          ]
+        },
+        {
+          "id": "2026-08-11-opt3-bus-return",
+          "time": "19:45",
+          "type": "optional",
+          "title": "[Opzione 3] Hallim → Jeju Bus Terminal (bus 202)",
+          "description": null,
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Jeju Bus Terminal",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeju Bus Terminal",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": null,
+            "notes": "~50 min · ₩1.200–1.500; poi taxi ~7 min a Tapdong"
+          },
+          "notes": [
+            "OPZIONE 3 (costa ovest)",
+            "Naver: fermata «한림공원» lato direzione Jeju City"
+          ]
+        },
+        {
+          "id": "2026-08-11-evening-jeju-city",
+          "time": "21:00",
+          "type": "market",
+          "title": "Sera a Jeju City",
+          "description": "Mercato notturno Dongmun («동문시장», ~18:00–24:00, veg: bindaetteok, tteok, mais, hotteok, hallabong), lungomare Tapdong, Yongduam Rock («용두암») illuminato.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Dongmun Market",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Dongmun Market Jeju",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Valido per entrambe le opzioni"
+          ]
+        }
+      ]
     },
     {
       "id": "2026-08-12",
       "dayNumber": 18,
       "date": "2026-08-12",
       "city": "Seoul",
-      "summary": "Rientro a Seoul",
+      "summary": "Rientro a Seoul (Gimpo)",
       "transferSummary": "Jeju → aereo → Seoul",
-      "detailStatus": "placeholder",
-      "items": []
+      "detailStatus": "transcribed",
+      "items": [
+        {
+          "id": "2026-08-12-transfer-cju",
+          "time": "06:15",
+          "type": "transport",
+          "title": "Tapdong → Aeroporto di Jeju (CJU)",
+          "description": "Check-in / bag drop verso le 06:45.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Jeju International Airport (CJU)",
+            "city": "Jeju City",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Jeju International Airport",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "taxi",
+            "durationMinutes": null,
+            "notes": "~10 min (stima) · ~₩6.000; a quest'ora il taxi è più sicuro del bus"
+          },
+          "notes": [
+            "Volo domestico: arrivare ~1h prima in alta stagione"
+          ]
+        },
+        {
+          "id": "2026-08-12-flight-cju-gmp",
+          "time": "08:00",
+          "type": "transport",
+          "title": "Volo CJU → Seoul Gimpo (GMP)",
+          "description": "Partenza CJU 08:00, arrivo GMP 09:15.",
+          "durationMinutes": 75,
+          "cost": null,
+          "status": "confirmed",
+          "location": {
+            "name": "Gimpo International Airport (GMP)",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gimpo International Airport",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "plane",
+            "durationMinutes": 75,
+            "notes": null
+          },
+          "notes": [
+            "Volo confermato",
+            "Da Gimpo al centro: metro / AREX (~30–40 min)"
+          ]
+        }
+      ]
     },
     {
       "id": "2026-08-13",
