@@ -1,4 +1,4 @@
-# Specifica tecnica — Sito mobile “Corea 2026”
+# Specifica tecnica — Sito mobile “My Trips” (multi-viaggio)
 
 **Versione:** 1.0  
 **Destinatari:** team di sviluppo  
@@ -192,16 +192,29 @@ Come viaggiatore, voglio aggiungere il sito alla schermata iniziale per aprirlo 
 - contrasto conforme almeno a WCAG AA;
 - nessuna informazione comunicata esclusivamente tramite colore.
 
-### 5.2 Home
+### 5.2 Selettore dei viaggi (home reale, `#/`)
 
-La home deve mostrare:
+L'app copre più viaggi. La vera home è un selettore che deve mostrare:
 
-1. titolo “Corea 2026”;
-2. periodo “26 luglio – 13 agosto 2026”;
-3. stato della connessione;
-4. pulsante “Vai a oggi”;
-5. elenco cronologico delle giornate;
-6. per ogni giornata: data, città, sintesi e stato “dettagli disponibili / da completare”.
+1. titolo “I miei viaggi”;
+2. stato della connessione;
+3. una card per ogni viaggio disponibile, con: titolo, periodo (date di
+   inizio/fine), stato calcolato a runtime (“in programma” / “in corso” /
+   “concluso”, confrontando la data odierna con `startDate`/`endDate` —
+   mai memorizzato nei dati), e una breve sintesi;
+4. il tocco su una card apre la home di quel viaggio (`#/trip/:tripId`).
+
+### 5.2bis Home del singolo viaggio (`#/trip/:tripId`)
+
+Selezionato un viaggio, la sua home deve mostrare:
+
+1. titolo del viaggio (es. “Corea 2026”);
+2. periodo del viaggio (es. “26 luglio – 13 agosto 2026”);
+3. pulsante “Vai a oggi” (attivo solo se la data odierna rientra nel
+   periodo del viaggio);
+4. elenco cronologico delle giornate;
+5. per ogni giornata: data, città, sintesi e stato “dettagli disponibili / da completare”;
+6. un link per tornare al selettore dei viaggi.
 
 ### 5.3 Pagina o vista giornata
 
@@ -212,7 +225,8 @@ Header della giornata:
 - località principale;
 - eventuale trasferimento;
 - meteo non incluso nell’MVP;
-- navigazione precedente/successivo.
+- navigazione precedente/successivo, e un link per tornare al selettore dei
+  viaggi.
 
 Corpo:
 
@@ -238,7 +252,8 @@ Nell’interfaccia, i dati `uncertain` devono mostrare un’icona e la dicitura 
 
 ## 6. Modello dati
 
-Salvare i contenuti in `data/itinerary.json`.
+Salvare i contenuti di ciascun viaggio in `data/trips/<id>.json` (un file per
+viaggio), elencati in `data/trips/index.json`.
 
 Esempio:
 
@@ -439,8 +454,11 @@ Oggetto "money" generalizzato (usato sia in `cost` che in `fare`):
 
 ## 8. Struttura del repository
 
+> Nota: questo repository è in fase di rename da `south-courea-2026` a
+> `my-travel-log`, perché copre più di un viaggio (non solo la Corea).
+
 ```text
-korea-2026/
+my-travel-log/
 ├── index.html
 ├── 404.html
 ├── manifest.webmanifest
@@ -463,7 +481,10 @@ korea-2026/
 │   │   └── maskable-512.png
 │   └── images/
 ├── data/
-│   └── itinerary.json
+│   └── trips/
+│       ├── index.json
+│       ├── korea-2026.json
+│       └── china-2025.json
 ├── tests/
 │   ├── itinerary.test.js
 │   └── links.test.js
@@ -480,12 +501,15 @@ Per evitare problemi con il percorso di progetto di GitHub Pages, usare riferime
 
 Per massima compatibilità con GitHub Pages, evitare routing client-side basato su path nella prima versione.
 
-Usare una singola pagina con hash routing:
+Usare una singola pagina con hash routing a tre livelli (selettore viaggi →
+home del viaggio → giornata):
 
 ```text
 ./#/
-./#/day/2026-07-26
-./#/day/2026-07-27
+./#/trip/korea-2026
+./#/trip/korea-2026/day/2026-07-26
+./#/trip/china-2025
+./#/trip/china-2025/day/2025-08-19
 ```
 
 Vantaggi:
@@ -507,9 +531,9 @@ Configurazione minima suggerita:
 
 ```json
 {
-  "name": "Corea 2026 — Itinerario",
-  "short_name": "Corea 2026",
-  "description": "Itinerario del viaggio in Corea",
+  "name": "My Trips — Itinerari di viaggio",
+  "short_name": "My Trips",
+  "description": "Itinerari dei miei viaggi",
   "lang": "it-IT",
   "start_url": "./#/",
   "scope": "./",
@@ -540,10 +564,10 @@ Configurazione minima suggerita:
 ### 10.2 Strategia di cache
 
 - shell applicativa: **cache first**;
-- `data/itinerary.json`: **stale while revalidate** o network first con fallback alla cache;
+- `data/trips/index.json` e `data/trips/<id>.json`: **stale while revalidate** o network first con fallback alla cache;
 - mappe e link esterni: non precaricare;
 - immagini non essenziali: lazy loading;
-- usare un nome cache versionato, ad esempio `korea-2026-v1`;
+- usare un nome cache versionato, ad esempio `my-travel-log-v1`;
 - all’attivazione del nuovo Service Worker eliminare soltanto cache applicative obsolete;
 - non interferire con `localStorage`.
 
@@ -610,16 +634,18 @@ Usare:
 
 ## 12. Persistenza locale
 
-Chiavi suggerite:
+Le tappe completate sono namespaced per viaggio (un viaggio non deve mai
+mostrare come completate le tappe di un altro); tema e schema version restano
+condivisi tra tutti i viaggi. Chiavi suggerite:
 
 ```text
-korea2026.completedItems
+trip.<tripId>.completedItems   # es. trip.korea-2026.completedItems
 korea2026.theme
 korea2026.notes
 korea2026.schemaVersion
 ```
 
-Esempio stato completamenti:
+Esempio stato completamenti (per il viaggio `korea-2026`):
 
 ```json
 {
@@ -634,7 +660,7 @@ Requisiti:
 - gestione sicura di JSON corrotto;
 - default vuoto in caso di errore;
 - versione dello schema;
-- reset separato per completamenti e note.
+- reset separato per completamenti e note, sempre scoped al viaggio aperto.
 
 ---
 
@@ -731,13 +757,13 @@ chore: bump cache version
 Nome suggerito:
 
 ```text
-korea-2026
+my-travel-log
 ```
 
 Con un project site, l’indirizzo predefinito avrà normalmente questa struttura:
 
 ```text
-https://<account>.github.io/korea-2026/
+https://<account>.github.io/my-travel-log/
 ```
 
 Non codificare l’account o questo percorso nel codice.
@@ -925,7 +951,7 @@ Priorità suggerita:
 
 - repository GitHub configurato;
 - codice sorgente completo;
-- `itinerary.json` popolato;
+- `data/trips/index.json` e ogni `data/trips/<id>.json` popolati;
 - PWA manifest e icone;
 - Service Worker;
 - test automatici sui dati;

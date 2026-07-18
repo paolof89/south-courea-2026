@@ -242,6 +242,18 @@ button:focus-visible,
 
 /* Home */
 
+.home__back {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.home__back:hover {
+  text-decoration: underline;
+}
+
 .home__title {
   font-size: 1.5rem;
   margin: 0 0 var(--space-2);
@@ -431,6 +443,79 @@ button:focus-visible,
   background: var(--color-placeholder-bg);
   border: 1px solid var(--color-placeholder-border);
   color: #6b5000;
+}
+
+/* Trip picker (real home: choose which trip to open) */
+
+.trip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.trip-card {
+  display: block;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  color: var(--color-text);
+  min-height: var(--touch-target);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trip-card:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.trip-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.trip-card__title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.trip-card__badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.trip-card__badge--ongoing {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.trip-card__badge--upcoming {
+  background: var(--color-done-bg);
+  color: var(--color-text);
+}
+
+.trip-card__dates {
+  margin: var(--space-1) 0 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.trip-card__summary {
+  margin: var(--space-1) 0 0;
+  font-size: 0.9rem;
 }
 
 /* Day detail */

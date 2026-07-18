@@ -1,15 +1,35 @@
 ---
-description: "Rules for entering/editing the real trip data in data/itinerary.json"
-applyTo: "data/itinerary.json"
+description: "Rules for entering/editing the real trip data under data/trips/"
+applyTo: "data/trips/**"
 ---
 
-# Rules for `data/itinerary.json`
+# Rules for `data/trips/`
 
-This file is the single source of truth for the itinerary content rendered by
-the app. Follow these rules whenever you add, correct, or complete trip data.
-See [SPEC.md](../../SPEC.md) section 6 ("Modello dati") and section 7
-("Contenuto iniziale") for the full background — this file summarizes the
-operational rules to apply directly to the JSON.
+This app supports multiple trips. `data/trips/index.json` lists every trip
+(`{id, title, startDate, endDate, summary, dataUrl}`); each trip's actual
+itinerary content lives in its own file, `data/trips/<id>.json`, in the same
+shape documented below. Follow these rules whenever you add, correct, or
+complete trip data. See [SPEC.md](../../SPEC.md) section 6 ("Modello dati")
+and section 7 ("Contenuto iniziale") for the full background — this file
+summarizes the operational rules to apply directly to the JSON.
+
+## `data/trips/index.json`
+
+- One entry per trip, keep in sync with the files on disk: every entry's
+  `id` must match an existing `data/trips/<id>.json` file, and every trip
+  file must have a corresponding entry here.
+- `id`: kebab-case, unique, matches the trip's filename (e.g. `china-2025` ->
+  `data/trips/china-2025.json`). Once a trip has been published/used, do not
+  rename its `id` (it is also used as the localStorage namespace for
+  completed-item state).
+- `startDate`/`endDate`: ISO `YYYY-MM-DD`, must match the trip file's own
+  `trip.startDate`/`trip.endDate`.
+- `summary`: short factual one-liner (e.g. main cities visited in order).
+  Do not invent flavor text beyond what's actually in the trip's data.
+- `dataUrl`: relative path to the trip's JSON file, e.g.
+  `"./data/trips/china-2025.json"`.
+- Do not add a stored "status" (upcoming/past) field — the app computes this
+  at render time from today's date vs the trip's date range.
 
 ## Golden rules
 
@@ -21,8 +41,8 @@ operational rules to apply directly to the JSON.
   numbers, ticket codes, passport/ID info, payment details, phone numbers, or
   addresses of private accommodation contacts.
 - **JSON must stay valid** after every edit. Validate with:
-  `Get-Content -Raw data/itinerary.json | ConvertFrom-Json` (PowerShell) before
-  considering a change done.
+  `Get-Content -Raw data/trips/<id>.json | ConvertFrom-Json` (PowerShell) —
+  and `data/trips/index.json` the same way — before considering a change done.
 - **Use `null`, not empty strings**, for unknown scalar values (e.g.
   `"cost": null`, not `"cost": ""`).
 - **Keep every `id` stable and unique.** Once published, do not change an
@@ -31,7 +51,10 @@ operational rules to apply directly to the JSON.
 
 ## Top-level `trip` object
 
-- `id`: keep as `"korea-2026"` (stable).
+- `id`: kebab-case, unique across all trips, must match the filename
+  (`data/trips/<id>.json`) and the corresponding entry in
+  `data/trips/index.json`. Once published, do not change it.
+- `title`: short display title for the trip (e.g. `"Corea 2026"`).
 - `startDate` / `endDate`: ISO `YYYY-MM-DD`, must match the actual trip range.
 - `timezone`: IANA name, e.g. `"Asia/Seoul"`.
 - `lastUpdated`: ISO `YYYY-MM-DD`. **Update this every time you change trip
@@ -116,7 +139,7 @@ Each stop/activity in a day's timeline:
    `"transcribed"`.
 5. Update `trip.lastUpdated` to the date of the edit.
 6. Re-run the JSON validation command above and check the app locally
-   (hash routes like `./#/day/YYYY-MM-DD`) before committing.
+   (hash routes like `./#/trip/<id>/day/YYYY-MM-DD`) before committing.
 7. Do not remove or rewrite the "still to verify" list in
    [SPEC.md](../../SPEC.md) section 7.3 — update it only when an item is
    actually resolved.

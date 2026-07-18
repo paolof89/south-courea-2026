@@ -1,7 +1,7 @@
 {
-  "name": "Corea 2026 — Itinerario",
-  "short_name": "Corea 2026",
-  "description": "Itinerario del viaggio in Corea del Sud dal 26 luglio al 13 agosto 2026.",
+  "name": "My Trips \u2014 Itinerari di viaggio",
+  "short_name": "My Trips",
+  "description": "Itinerari dei miei viaggi, consultabili anche offline.",
   "lang": "it-IT",
   "start_url": "./#/",
   "scope": "./",

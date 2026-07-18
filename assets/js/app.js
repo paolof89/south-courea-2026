@@ -1,6 +1,8 @@
-// Corea 2026 — main application module (vanilla ES module).
-// - Loads itinerary from ./data/itinerary.json
-// - Hash router: #/ (home) and #/day/YYYY-MM-DD (day detail)
+// My Trips — main application module (vanilla ES module).
+// - Loads the trips index from ./data/trips/index.json, then lazily loads
+//   each trip's own itinerary file (trips[].dataUrl) on first visit.
+// - Hash router: #/ (trip picker), #/trip/:tripId (trip home),
+//   #/trip/:tripId/day/YYYY-MM-DD (day detail)
 // - Renders content with textContent only, never innerHTML with data
 // - Registers the service worker
 
@@ -14,16 +16,19 @@ import {
   setTheme,
 } from './storage.js';
 
-const DATA_URL = './data/itinerary.json';
+const TRIPS_INDEX_URL = './data/trips/index.json';
 
 const state = {
-  itinerary: null,
+  tripsIndex: null,
+  trips: new Map(), // tripId -> loaded itinerary { trip, days }
+  currentTripId: null,
   error: null,
 };
 
 const mainEl = document.getElementById('main');
 const connectionStatusEl = document.getElementById('connection-status');
 const lastUpdatedEl = document.getElementById('last-updated');
+const tripContextEl = document.getElementById('trip-context');
 const themeToggleEl = document.getElementById('theme-toggle');
 const resetCompletedEl = document.getElementById('reset-completed');
 const updateBannerEl = document.getElementById('update-banner');
@@ -72,9 +77,9 @@ function iconForType(type) {
   return map[type] || '📍';
 }
 
-/** Count of completed vs total items across a list of items. */
-function countProgress(items) {
-  const completed = getCompletedMap();
+/** Count of completed vs total items across a list of items, for a given trip. */
+function countProgress(tripId, items) {
+  const completed = getCompletedMap(tripId);
   const total = items.length;
   const done = items.filter((item) => Boolean(completed[item.id])).length;
   return { done, total };
@@ -171,23 +176,99 @@ function el(tag, className, text) {
 
 // ---------- Data loading ----------
 
-async function loadItinerary() {
-  const response = await fetch(DATA_URL, { cache: 'no-cache' });
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: 'no-cache' });
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}`);
   }
   return response.json();
 }
 
-// ---------- Rendering: home ----------
+/** Loads (and caches) a single trip's itinerary data by id, using its `dataUrl` from the trips index. */
+async function loadTrip(tripId) {
+  if (state.trips.has(tripId)) return state.trips.get(tripId);
+  const entry = (state.tripsIndex || []).find((t) => t.id === tripId);
+  if (!entry) throw new Error(`Viaggio sconosciuto: ${tripId}`);
+  const itinerary = await fetchJson(entry.dataUrl);
+  state.trips.set(tripId, itinerary);
+  return itinerary;
+}
 
-function renderHome() {
+// ---------- Rendering: trip picker (real home) ----------
+
+/** Computes upcoming/ongoing/past from today's date; never stored in data. */
+function tripStatus(trip, todayId) {
+  if (todayId < trip.startDate) return { modifier: 'upcoming', label: 'In programma' };
+  if (todayId > trip.endDate) return { modifier: 'past', label: 'Concluso' };
+  return { modifier: 'ongoing', label: 'In corso' };
+}
+
+function renderTripPicker(tripsIndex) {
   clear(mainEl);
-  const { trip, days } = state.itinerary;
   const todayId = getTodayIsoDate();
 
   const section = el('section', 'home');
   section.setAttribute('aria-labelledby', 'home-title');
+
+  const h1 = el('h1', 'home__title', 'I miei viaggi');
+  h1.id = 'home-title';
+  section.appendChild(h1);
+
+  section.appendChild(
+    el('p', 'home__intro', 'Scegli un viaggio per consultarne l’itinerario.'),
+  );
+
+  const list = el('ul', 'trip-list');
+  list.setAttribute('aria-label', 'Elenco dei viaggi');
+
+  for (const trip of tripsIndex) {
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.className = 'trip-card';
+    link.href = `#/trip/${trip.id}`;
+
+    const header = el('div', 'trip-card__header');
+    header.appendChild(el('span', 'trip-card__title', trip.title));
+    const status = tripStatus(trip, todayId);
+    header.appendChild(
+      el('span', `trip-card__badge trip-card__badge--${status.modifier}`, status.label),
+    );
+    link.appendChild(header);
+
+    link.appendChild(
+      el(
+        'p',
+        'trip-card__dates',
+        `${formatDateShort(trip.startDate)} – ${formatDateShort(trip.endDate)} ${trip.endDate.slice(0, 4)}`,
+      ),
+    );
+
+    if (trip.summary) {
+      link.appendChild(el('p', 'trip-card__summary', trip.summary));
+    }
+
+    li.appendChild(link);
+    list.appendChild(li);
+  }
+
+  section.appendChild(list);
+  mainEl.appendChild(section);
+  mainEl.focus();
+}
+
+// ---------- Rendering: trip home ----------
+
+function renderTripHome(tripId, itinerary) {
+  clear(mainEl);
+  const { trip, days } = itinerary;
+  const todayId = getTodayIsoDate();
+
+  const section = el('section', 'home');
+  section.setAttribute('aria-labelledby', 'home-title');
+
+  const backLink = el('a', 'home__back', '← Tutti i viaggi');
+  backLink.href = '#/';
+  section.appendChild(backLink);
 
   const h1 = el('h1', 'home__title', trip.title);
   h1.id = 'home-title';
@@ -203,7 +284,7 @@ function renderHome() {
   // Trip-wide progress
   const allItems = getAllItems(days);
   if (allItems.length > 0) {
-    const { done, total } = countProgress(allItems);
+    const { done, total } = countProgress(tripId, allItems);
     section.appendChild(buildProgressBar(done, total, 'Avanzamento del viaggio'));
   }
 
@@ -216,7 +297,7 @@ function renderHome() {
   const hasToday = days.some((d) => d.id === todayId);
   todayBtn.addEventListener('click', () => {
     if (hasToday) {
-      window.location.hash = `#/day/${todayId}`;
+      window.location.hash = `#/trip/${tripId}/day/${todayId}`;
       return;
     }
     todayStatus.textContent =
@@ -252,7 +333,7 @@ function renderHome() {
     const li = document.createElement('li');
     const link = document.createElement('a');
     link.className = isToday ? 'day-card day-card--today' : 'day-card';
-    link.href = `#/day/${day.id}`;
+    link.href = `#/trip/${tripId}/day/${day.id}`;
     if (isToday) link.setAttribute('aria-current', 'date');
 
     // Text used for client-side search matching.
@@ -293,7 +374,7 @@ function renderHome() {
     badges.appendChild(status);
 
     if (Array.isArray(day.items) && day.items.length > 0) {
-      const { done, total } = countProgress(day.items);
+      const { done, total } = countProgress(tripId, day.items);
       badges.appendChild(
         el('span', 'day-card__badge day-card__badge--progress', `${done}/${total} completate`),
       );
@@ -362,16 +443,16 @@ function updateProgressBar(wrap, done, total) {
 
 // ---------- Rendering: day detail ----------
 
-function renderDay(dayId) {
+function renderDay(tripId, itinerary, dayId) {
   clear(mainEl);
-  const { days } = state.itinerary;
+  const { days } = itinerary;
   const index = days.findIndex((d) => d.id === dayId);
 
   if (index === -1) {
     const err = el('div', 'error', 'Giornata non trovata.');
     const backLink = el('p');
-    const a = el('a', null, 'Torna all’indice');
-    a.href = '#/';
+    const a = el('a', null, 'Torna all’indice del viaggio');
+    a.href = `#/trip/${tripId}`;
     backLink.appendChild(a);
     err.appendChild(backLink);
     mainEl.appendChild(err);
@@ -390,35 +471,39 @@ function renderDay(dayId) {
   const nav = el('nav', 'day-nav');
   nav.setAttribute('aria-label', 'Navigazione tra le giornate');
 
+  const tripsBtn = el('a', 'day-nav__btn', 'Viaggi');
+  tripsBtn.href = '#/';
+  nav.appendChild(tripsBtn);
+
   const prevBtn = el('a', 'day-nav__btn', '← Precedente');
   if (prev) {
-    prevBtn.href = `#/day/${prev.id}`;
+    prevBtn.href = `#/trip/${tripId}/day/${prev.id}`;
   } else {
     prevBtn.setAttribute('aria-disabled', 'true');
-    prevBtn.href = '#/';
+    prevBtn.href = `#/trip/${tripId}`;
   }
   nav.appendChild(prevBtn);
 
   const todayBtn = el('a', 'day-nav__btn', 'Oggi');
   if (days.some((d) => d.id === todayId)) {
-    todayBtn.href = `#/day/${todayId}`;
+    todayBtn.href = `#/trip/${tripId}/day/${todayId}`;
     if (day.id === todayId) todayBtn.setAttribute('aria-current', 'date');
   } else {
     todayBtn.setAttribute('aria-disabled', 'true');
-    todayBtn.href = '#/';
+    todayBtn.href = `#/trip/${tripId}`;
   }
   nav.appendChild(todayBtn);
 
   const indexBtn = el('a', 'day-nav__btn', 'Indice');
-  indexBtn.href = '#/';
+  indexBtn.href = `#/trip/${tripId}`;
   nav.appendChild(indexBtn);
 
   const nextBtn = el('a', 'day-nav__btn', 'Successivo →');
   if (next) {
-    nextBtn.href = `#/day/${next.id}`;
+    nextBtn.href = `#/trip/${tripId}/day/${next.id}`;
   } else {
     nextBtn.setAttribute('aria-disabled', 'true');
-    nextBtn.href = '#/';
+    nextBtn.href = `#/trip/${tripId}`;
   }
   nav.appendChild(nextBtn);
 
@@ -441,7 +526,7 @@ function renderDay(dayId) {
   if (hasItems) {
     const strip = buildTransportStrip(day.items);
     if (strip) header.appendChild(strip);
-    const { done, total } = countProgress(day.items);
+    const { done, total } = countProgress(tripId, day.items);
     dayProgressBar = buildProgressBar(done, total, 'Tappe della giornata');
     header.appendChild(dayProgressBar);
     const stats = buildDayStats(day.items);
@@ -463,13 +548,13 @@ function renderDay(dayId) {
     article.appendChild(box);
   } else {
     article.appendChild(buildCategoryFilter(day.items));
-    const nextUpId = day.id === todayId ? computeNextUpId(day.items) : null;
+    const nextUpId = day.id === todayId ? computeNextUpId(tripId, day.items) : null;
     const onToggle = () => {
-      const { done, total } = countProgress(day.items);
+      const { done, total } = countProgress(tripId, day.items);
       updateProgressBar(dayProgressBar, done, total);
     };
-    article.appendChild(renderTimeline(day.items, { nextUpId, onToggle }));
-    wireSwipeNavigation(article, prev, next);
+    article.appendChild(renderTimeline(tripId, day.items, { nextUpId, onToggle }));
+    wireSwipeNavigation(tripId, article, prev, next);
   }
 
   mainEl.appendChild(article);
@@ -477,8 +562,8 @@ function renderDay(dayId) {
 }
 
 /** ID of the next not-yet-completed item whose time is >= now (today's view only). */
-function computeNextUpId(items) {
-  const completed = getCompletedMap();
+function computeNextUpId(tripId, items) {
+  const completed = getCompletedMap(tripId);
   const now = new Date();
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
   for (const item of items) {
@@ -601,7 +686,7 @@ function buildCategoryFilter(items) {
 }
 
 /** Left/right swipe on the day article navigates to the previous/next day. */
-function wireSwipeNavigation(articleEl, prevDay, nextDay) {
+function wireSwipeNavigation(tripId, articleEl, prevDay, nextDay) {
   let startX = 0;
   let startY = 0;
   let tracking = false;
@@ -621,9 +706,9 @@ function wireSwipeNavigation(articleEl, prevDay, nextDay) {
     const deltaY = touch.clientY - startY;
     if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
     if (deltaX < 0 && nextDay) {
-      window.location.hash = `#/day/${nextDay.id}`;
+      window.location.hash = `#/trip/${tripId}/day/${nextDay.id}`;
     } else if (deltaX > 0 && prevDay) {
-      window.location.hash = `#/day/${prevDay.id}`;
+      window.location.hash = `#/trip/${tripId}/day/${prevDay.id}`;
     }
   });
 }
@@ -704,12 +789,12 @@ function renderTransferConnector(t) {
   return wrap;
 }
 
-function renderTimeline(items, options = {}) {
+function renderTimeline(tripId, items, options = {}) {
   const { nextUpId = null, onToggle = null } = options;
   const list = el('ol', 'timeline');
   list.setAttribute('aria-label', 'Tappe della giornata');
 
-  const completed = getCompletedMap();
+  const completed = getCompletedMap(tripId);
   let firstTransferSeen = false;
 
   for (const item of items) {
@@ -792,7 +877,7 @@ function renderTimeline(items, options = {}) {
     checkbox.className = 'timeline-item__checkbox';
     checkbox.checked = Boolean(completed[item.id]);
     checkbox.addEventListener('change', () => {
-      setItemCompleted(item.id, checkbox.checked);
+      setItemCompleted(tripId, item.id, checkbox.checked);
       li.classList.toggle('timeline-item--done', checkbox.checked);
       if (onToggle) onToggle();
     });
@@ -836,37 +921,117 @@ function labelForTransferMode(mode) {
 
 function parseHash() {
   const hash = window.location.hash || '#/';
-  // Expected forms: "#/", "#/day/2026-07-26"
+  // Expected forms: "#/", "#/trip/korea-2026", "#/trip/korea-2026/day/2026-07-26"
   if (hash === '#/' || hash === '#' || hash === '') {
-    return { route: 'home' };
+    return { route: 'picker' };
   }
-  const dayMatch = hash.match(/^#\/day\/(\d{4}-\d{2}-\d{2})$/);
+  const dayMatch = hash.match(/^#\/trip\/([a-z0-9-]+)\/day\/(\d{4}-\d{2}-\d{2})$/);
   if (dayMatch) {
-    return { route: 'day', dayId: dayMatch[1] };
+    return { route: 'day', tripId: dayMatch[1], dayId: dayMatch[2] };
+  }
+  const tripMatch = hash.match(/^#\/trip\/([a-z0-9-]+)$/);
+  if (tripMatch) {
+    return { route: 'tripHome', tripId: tripMatch[1] };
   }
   return { route: 'unknown' };
 }
 
-function render() {
+/** Shows/hides and populates the footer's trip-scoped bits (last-updated date, reset button) and the header's trip-context line. */
+function updateFooterForTrip(tripId, itinerary) {
+  if (!tripId || !itinerary) {
+    if (lastUpdatedEl) lastUpdatedEl.textContent = '';
+    if (resetCompletedEl) resetCompletedEl.hidden = true;
+    if (tripContextEl) tripContextEl.textContent = '';
+    return;
+  }
+  const trip = itinerary.trip;
+  if (lastUpdatedEl && trip && trip.lastUpdated) {
+    lastUpdatedEl.textContent = `Ultimo aggiornamento dati: ${trip.lastUpdated}`;
+  }
+  if (resetCompletedEl) resetCompletedEl.hidden = false;
+  if (tripContextEl && trip) {
+    tripContextEl.textContent =
+      `${trip.title} · ${formatDateShort(trip.startDate)} – ${formatDateShort(trip.endDate)} ${trip.endDate.slice(0, 4)}`;
+  }
+}
+
+async function render() {
   if (state.error) {
     clear(mainEl);
     const err = el(
       'div',
       'error',
-      `Impossibile caricare l’itinerario: ${state.error}`,
+      `Impossibile caricare i viaggi: ${state.error}`,
     );
     mainEl.appendChild(err);
+    updateFooterForTrip(null, null);
     return;
   }
-  if (!state.itinerary) return;
+  if (!state.tripsIndex) return;
 
+  const hashAtStart = window.location.hash || '#/';
   const parsed = parseHash();
-  if (parsed.route === 'day') {
-    renderDay(parsed.dayId);
-  } else if (parsed.route === 'unknown') {
+
+  if (parsed.route === 'unknown') {
     window.location.hash = '#/';
+    return;
+  }
+
+  if (parsed.route === 'picker') {
+    state.currentTripId = null;
+    renderTripPicker(state.tripsIndex);
+    updateFooterForTrip(null, null);
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  // tripHome or day: the trip must exist in the index, and its data may need
+  // to be lazily fetched on first visit.
+  const tripId = parsed.tripId;
+  const entry = state.tripsIndex.find((t) => t.id === tripId);
+  if (!entry) {
+    clear(mainEl);
+    const err = el('div', 'error', 'Viaggio non trovato.');
+    const backP = el('p');
+    const a = el('a', null, 'Torna ai viaggi');
+    a.href = '#/';
+    backP.appendChild(a);
+    err.appendChild(backP);
+    mainEl.appendChild(err);
+    state.currentTripId = null;
+    updateFooterForTrip(null, null);
+    return;
+  }
+
+  let itinerary;
+  try {
+    if (!state.trips.has(tripId)) {
+      clear(mainEl);
+      mainEl.appendChild(el('p', 'loading', 'Caricamento itinerario…'));
+    }
+    itinerary = await loadTrip(tripId);
+  } catch (err) {
+    clear(mainEl);
+    mainEl.appendChild(
+      el('div', 'error', `Impossibile caricare il viaggio: ${err.message || err}`),
+    );
+    state.currentTripId = null;
+    updateFooterForTrip(null, null);
+    return;
+  }
+
+  // If the hash changed again while the fetch above was in flight, a newer
+  // render() call already owns the current route — bail out to avoid a
+  // stale render clobbering it.
+  if ((window.location.hash || '#/') !== hashAtStart) return;
+
+  state.currentTripId = tripId;
+  updateFooterForTrip(tripId, itinerary);
+
+  if (parsed.route === 'day') {
+    renderDay(tripId, itinerary, parsed.dayId);
   } else {
-    renderHome();
+    renderTripHome(tripId, itinerary);
   }
   window.scrollTo(0, 0);
 }
@@ -912,11 +1077,12 @@ function initTheme() {
 function initResetCompleted() {
   if (!resetCompletedEl) return;
   resetCompletedEl.addEventListener('click', () => {
+    if (!state.currentTripId) return;
     const confirmed = window.confirm(
-      'Azzerare tutte le tappe completate? L’operazione non può essere annullata.',
+      'Azzerare tutte le tappe completate di questo viaggio? L’operazione non può essere annullata.',
     );
     if (!confirmed) return;
-    resetCompleted();
+    resetCompleted(state.currentTripId);
     render();
   });
 }
@@ -1009,10 +1175,8 @@ async function init() {
   initResetCompleted();
 
   try {
-    state.itinerary = await loadItinerary();
-    if (lastUpdatedEl && state.itinerary.trip && state.itinerary.trip.lastUpdated) {
-      lastUpdatedEl.textContent = `Ultimo aggiornamento dati: ${state.itinerary.trip.lastUpdated}`;
-    }
+    const data = await fetchJson(TRIPS_INDEX_URL);
+    state.tripsIndex = Array.isArray(data.trips) ? data.trips : [];
   } catch (err) {
     state.error = err.message || String(err);
   }

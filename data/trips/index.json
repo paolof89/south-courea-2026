@@ -1,0 +1,20 @@
+{
+  "trips": [
+    {
+      "id": "korea-2026",
+      "title": "Corea 2026",
+      "startDate": "2026-07-26",
+      "endDate": "2026-08-13",
+      "summary": "Seoul, Busan, Jeju e altre tappe in Corea del Sud.",
+      "dataUrl": "./data/trips/korea-2026.json"
+    },
+    {
+      "id": "china-2025",
+      "title": "Cina 2025",
+      "startDate": "2025-08-19",
+      "endDate": "2025-09-07",
+      "summary": "Hong Kong, Guilin, Chongqing, Chengdu, Xi'an, Dengfeng, Shanghai, Tai'an, Pechino.",
+      "dataUrl": "./data/trips/china-2025.json"
+    }
+  ]
+}
