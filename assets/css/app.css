@@ -187,17 +187,6 @@ button:focus-visible,
   font-size: 0.9rem;
 }
 
-.update-banner__btn {
-  min-height: var(--touch-target);
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
-  border: none;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
 /* Footer */
 
 .reset-completed {

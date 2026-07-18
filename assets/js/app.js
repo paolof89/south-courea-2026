@@ -32,7 +32,6 @@ const tripContextEl = document.getElementById('trip-context');
 const themeToggleEl = document.getElementById('theme-toggle');
 const resetCompletedEl = document.getElementById('reset-completed');
 const updateBannerEl = document.getElementById('update-banner');
-const updateBannerBtnEl = document.getElementById('update-banner__btn');
 
 // ---------- Utilities ----------
 
@@ -1117,6 +1116,22 @@ function registerServiceWorker() {
       .register('./sw.js', { updateViaCache: 'none' })
       .then((registration) => {
         watchForUpdates(registration, hadControllerAtLoad);
+        // Browsers only auto-check for a new sw.js on navigation, and only
+        // about once every 24h. Visitors who reopen an installed/pinned app
+        // without a full navigation (or who load it more than once in a day)
+        // could otherwise be stuck on a stale version indefinitely.
+        // registration.update() is an explicit check and isn't subject to
+        // that throttle, so trigger it right away, whenever the app comes
+        // back to the foreground, and periodically while it stays open.
+        registration.update().catch(() => {});
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') {
+            registration.update().catch(() => {});
+          }
+        });
+        setInterval(() => {
+          registration.update().catch(() => {});
+        }, 60 * 60 * 1000);
       })
       .catch((err) => {
         console.warn('Registrazione Service Worker fallita:', err);
@@ -1124,42 +1139,21 @@ function registerServiceWorker() {
   });
 }
 
-/** Shows a non-intrusive "update available" banner instead of forcing a reload. */
+/**
+ * Reloads the page once a new service worker version has taken control.
+ * The new version activates itself automatically (see `skipWaiting()` in
+ * sw.js's install handler), so this no longer needs a manual "Aggiorna"
+ * click to reach visitors who won't notice or understand a technical
+ * banner — it briefly shows a status message, then reloads.
+ */
 function watchForUpdates(registration, hadControllerAtLoad) {
   if (!hadControllerAtLoad) return; // First install: nothing to update yet.
-
-  const showBanner = (worker) => {
-    if (!updateBannerEl) return;
-    updateBannerEl.hidden = false;
-    if (updateBannerBtnEl) {
-      updateBannerBtnEl.addEventListener(
-        'click',
-        () => {
-          worker.postMessage({ type: 'SKIP_WAITING' });
-        },
-        { once: true },
-      );
-    }
-  };
-
-  if (registration.waiting) {
-    showBanner(registration.waiting);
-  }
-
-  registration.addEventListener('updatefound', () => {
-    const installing = registration.installing;
-    if (!installing) return;
-    const checkState = () => {
-      if (installing.state === 'installed') showBanner(installing);
-    };
-    installing.addEventListener('statechange', checkState);
-    checkState(); // Covers the case where 'installed' was reached before we attached the listener.
-  });
 
   let reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (reloaded) return;
     reloaded = true;
+    if (updateBannerEl) updateBannerEl.hidden = false;
     window.location.reload();
   });
 }

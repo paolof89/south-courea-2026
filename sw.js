@@ -1,10 +1,10 @@
-// My Trips — Service Worker
+﻿// My Trips â€” Service Worker
 // Cache app shell (cache-first). Trip itinerary data uses network-first with cache fallback.
 // Use only relative URLs so the site keeps working on GitHub Pages under a subpath.
 
 'use strict';
 
-const CACHE_NAME = 'my-travel-log-v1';
+const CACHE_NAME = 'my-travel-log-v2';
 
 // App shell: files needed for the site to boot offline.
 // All paths are relative to the service worker's scope.
@@ -25,13 +25,24 @@ const APP_SHELL = [
 ];
 
 self.addEventListener('install', (event) => {
-  // Do not call skipWaiting() here: let the new worker stay in 'waiting' state
-  // so the app can show an "update available" banner and let the user decide
-  // when to activate it (see the 'message' listener below).
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  // Activate new versions automatically instead of waiting for a manual
+  // gesture: this app has no in-progress unsaved state that a reload could
+  // lose (completed items/theme are persisted to localStorage immediately),
+  // so it's safe to take over as soon as the new app shell is cached. This
+  // is what lets updates reach every visitor, not only people who notice and
+  // click an "update" button.
+  event.waitUntil(
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting()),
+  );
 });
 
 self.addEventListener('message', (event) => {
+  // Kept for backward compatibility with any previously cached app.js that
+  // still sends this message; new versions no longer need to since
+  // skipWaiting() is now called unconditionally above.
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
@@ -94,3 +105,4 @@ self.addEventListener('fetch', (event) => {
     }),
   );
 });
+

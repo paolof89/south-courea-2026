@@ -148,8 +148,13 @@ configurazione aggiuntiva né un file di base path.
 
 Quando pubblichi una versione con modifiche a shell, codice o dati di un
 viaggio, incrementa la costante `CACHE_NAME` in [`sw.js`](sw.js) (es.
-`my-travel-log-v1` → `my-travel-log-v2`). All'attivazione, il nuovo Service
-Worker eliminerà automaticamente le vecchie cache applicative.
+`my-travel-log-v1` → `my-travel-log-v2`). Senza questo incremento il file
+`sw.js` resta identico e i visitatori non riceveranno mai l'aggiornamento.
+Il nuovo Service Worker si attiva **automaticamente** (nessun banner con
+pulsante da premere): l'app ricontrolla la presenza di aggiornamenti alla
+registrazione, ogni volta che torna in primo piano e periodicamente mentre
+resta aperta, quindi raggiunge anche i visitatori che non interagiscono con
+alcun avviso.
 
 ## Privacy
 

@@ -567,18 +567,33 @@ Configurazione minima suggerita:
 - `data/trips/index.json` e `data/trips/<id>.json`: **stale while revalidate** o network first con fallback alla cache;
 - mappe e link esterni: non precaricare;
 - immagini non essenziali: lazy loading;
-- usare un nome cache versionato, ad esempio `my-travel-log-v1`;
+- usare un nome cache versionato, ad esempio `my-travel-log-v2`;
 - all’attivazione del nuovo Service Worker eliminare soltanto cache applicative obsolete;
 - non interferire con `localStorage`.
 
 ### 10.3 Aggiornamenti
 
-Quando è disponibile una nuova versione:
+Quando è disponibile una nuova versione, il Service Worker la attiva in modo
+automatico (nessun banner con pulsante da premere): la maggior parte dei
+visitatori non nota né clicca un banner tecnico, quindi affidarsi a un'azione
+manuale lascia molte persone bloccate su contenuti obsoleti a tempo
+indeterminato. Requisiti:
 
-- mostrare un banner “È disponibile un aggiornamento”;
-- consentire all’utente di ricaricare;
-- non forzare un reload mentre l’utente sta consultando una giornata;
-- mantenere i dati locali compatibili tra versioni o prevedere una migrazione esplicita.
+- il nuovo Service Worker chiama `skipWaiting()` in modo incondizionato
+  nell'evento `install`, subito dopo aver popolato la cache dell'app shell;
+- lato pagina, l'evento `controllerchange` provoca un ricaricamento
+  automatico (non richiede alcun clic dell'utente); un breve avviso testuale
+  informa che è in corso un aggiornamento;
+- il ricaricamento automatico non avviene alla primissima installazione (solo
+  quando esisteva già un controller precedente), per evitare un reload senza
+  motivo al primo accesso;
+- per non dipendere solo dal controllo automatico del browser (limitato a
+  circa una volta ogni 24 ore per le verifiche legate alla navigazione), la
+  pagina richiama esplicitamente `registration.update()` alla registrazione,
+  ogni volta che l'app torna in primo piano (`visibilitychange`) e
+  periodicamente mentre resta aperta;
+- mantenere i dati locali compatibili tra versioni o prevedere una
+  migrazione esplicita.
 
 ### 10.4 Offline fallback
 
