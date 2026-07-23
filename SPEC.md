@@ -419,14 +419,16 @@ solo riferimenti ai piatti, evitando di duplicarne nome e descrizione.
       "id": "dish-example-one",
       "name": "Nome del piatto",
       "description": "Breve descrizione verificata del piatto.",
-      "status": "transcribed"
+      "status": "transcribed",
+      "food-type": "vegetarian"
     },
     {
       "id": "dish-example-two",
       "name": "Nome da verificare",
       "description": "Descrizione da verificare rispetto alla fonte.",
       "status": "uncertain",
-      "sourceText": "Testo originale dubbio"
+      "sourceText": "Testo originale dubbio",
+      "food-type": "classic"
     }
   ],
   "cities": [
@@ -450,6 +452,13 @@ Regole:
 - `dishes[]` è il catalogo canonico nazionale. Ogni piatto ha `id`
   kebab-case stabile e univoco, `name`, `description`, `status` e, soltanto
   per `status: "uncertain"`, il testo dubbio in `sourceText`;
+- `food-type` (opzionale, chiave kebab-case): guida icone/colori nella vista
+  Cibo, in modo analogo a `type` per gli item. Due soli valori ammessi:
+  `vegetarian` (piatto vegetariano o facilmente adattabile in versione veg) e
+  `classic` (piatto tradizionale con carne, pesce o frutti di mare). Se
+  assente o non riconosciuto, l'app non mostra alcun badge (fallback
+  neutro, nessun errore): il campo è additivo e i viaggi senza `food-type`
+  restano pienamente funzionanti;
 - `cities[]` ha `id` e `name` univoci, `itineraryCityNames` con i valori
   esatti usati in `days[].city` e `dishIds` con riferimenti validi a
   `dishes[].id`;
@@ -718,6 +727,8 @@ condivisi tra tutti i viaggi. Chiavi suggerite:
 trip.<tripId>.completedItems   # es. trip.korea-2026.completedItems
 trip.<tripId>.foodProgress     # piatti provati, es. { "dish-id": true }
 trip.<tripId>.dailyDish        # scelta per giornata, es. { "2026-07-26": "dish-id" }
+trip.<tripId>.foodRating       # voto personale 1-5, es. { "dish-id": 4 }
+trip.<tripId>.foodComment      # commento personale, es. { "dish-id": "Ottimo!" }
 korea2026.theme
 korea2026.notes
 korea2026.schemaVersion

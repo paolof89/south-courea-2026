@@ -66,9 +66,10 @@ summarizes the operational rules to apply directly to the JSON.
 ## Optional `food` catalog
 
 The optional top-level `food` object is a country-wide checklist. Its dishes
-are public itinerary content; the choice of a daily dish and the "tried"
-checkbox are intentionally stored only in the visitor's `localStorage` and
-must never be added to the JSON.
+are public itinerary content; the choice of a daily dish, the "tried"
+checkbox, the personal 1-5 star rating and the free-text comment are
+intentionally stored only in the visitor's `localStorage` and must never be
+added to the JSON.
 
 ```json
 "food": {
@@ -77,7 +78,8 @@ must never be added to the JSON.
       "id": "dish-example-one",
       "name": "Replace with the verified dish name",
       "description": "Replace with a factual description.",
-      "status": "transcribed"
+      "status": "transcribed",
+      "food-type": "vegetarian"
     }
   ],
   "cities": [
@@ -96,6 +98,13 @@ content before adding it to a trip file.
 
 - `dishes` is the canonical national catalog. Every entry needs a stable,
   unique kebab-case `id`, plus `name`, `description` and `status`.
+- `food-type` (optional, kebab-case key — read in JS as `dish['food-type']`):
+  drives a badge/color in the food view, analogous to `type` for items. Only
+  two values are allowed: `vegetarian` (vegetarian dish, or easily adapted to
+  a veg version) and `classic` (traditional dish with meat, fish or
+  seafood). Omit the field if not known — do not guess. Missing or unknown
+  values fall back to no badge (neutral, non-breaking); this field is
+  additive and trips without it keep working unchanged.
 - Use `status: "uncertain"` and preserve unclear source wording in
   `sourceText`; do not replace uncertain information with a guess.
 - `cities` groups dishes by availability or typicity. Each city needs a

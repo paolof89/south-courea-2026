@@ -26,6 +26,14 @@ function dailyDishKey(tripId) {
   return `trip.${tripId}.dailyDish`;
 }
 
+function foodRatingKey(tripId) {
+  return `trip.${tripId}.foodRating`;
+}
+
+function foodCommentKey(tripId) {
+  return `trip.${tripId}.foodComment`;
+}
+
 function readJSON(key, fallback) {
   try {
     const raw = window.localStorage.getItem(key);
@@ -135,12 +143,53 @@ export function setDailyDish(tripId, dayId, dishId) {
   return map;
 }
 
+/** Returns a map of dishId -> rating (1-5) for a given trip. */
+export function getFoodRatingMap(tripId) {
+  return readJSON(foodRatingKey(tripId), {});
+}
+
+/** Stores (1-5) or clears (0/null/undefined) the personal rating for a dish. */
+export function setFoodDishRating(tripId, dishId, rating) {
+  const map = getFoodRatingMap(tripId);
+  const value = Number(rating);
+  if (Number.isInteger(value) && value >= 1 && value <= 5) {
+    map[dishId] = value;
+  } else {
+    delete map[dishId];
+  }
+  writeJSON(foodRatingKey(tripId), map);
+  ensureSchemaVersion();
+  return map;
+}
+
+/** Returns a map of dishId -> personal comment text for a given trip. */
+export function getFoodCommentMap(tripId) {
+  return readJSON(foodCommentKey(tripId), {});
+}
+
+/** Stores or clears (empty string) the personal comment for a dish. */
+export function setFoodDishComment(tripId, dishId, comment) {
+  const map = getFoodCommentMap(tripId);
+  const trimmed = typeof comment === 'string' ? comment : '';
+  if (trimmed) {
+    map[dishId] = trimmed;
+  } else {
+    delete map[dishId];
+  }
+  writeJSON(foodCommentKey(tripId), map);
+  ensureSchemaVersion();
+  return map;
+}
+
 /** Clears food progress and daily selections for a given trip. */
 export function resetFoodState(tripId) {
   writeJSON(foodProgressKey(tripId), {});
   writeJSON(dailyDishKey(tripId), {});
+  writeJSON(foodRatingKey(tripId), {});
+  writeJSON(foodCommentKey(tripId), {});
   ensureSchemaVersion();
 }
+
 
 /** Returns 'light' | 'dark' | null (null = no explicit preference stored). */
 export function getTheme() {

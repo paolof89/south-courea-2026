@@ -16,6 +16,10 @@ import {
   setFoodDishCompleted,
   getDailyDishMap,
   setDailyDish,
+  getFoodRatingMap,
+  setFoodDishRating,
+  getFoodCommentMap,
+  setFoodDishComment,
   resetFoodState,
   getTheme,
   setTheme,
@@ -228,12 +232,22 @@ function normalizeFoodData(food) {
       model.warnings.push(`Il piatto “${dish.id}” è duplicato ed è stato ignorato.`);
       continue;
     }
+    const rawFoodType = dish['food-type'];
+    let foodType = null;
+    if (rawFoodType === 'vegetarian' || rawFoodType === 'classic') {
+      foodType = rawFoodType;
+    } else if (rawFoodType != null) {
+      model.warnings.push(
+        `Il piatto “${dish.id}” ha un food-type sconosciuto (“${rawFoodType}”) ed è stato ignorato.`,
+      );
+    }
     const normalizedDish = {
       id: dish.id,
       name: dish.name,
       description: typeof dish.description === 'string' ? dish.description : null,
       status: dish.status,
       sourceText: typeof dish.sourceText === 'string' ? dish.sourceText : null,
+      foodType,
     };
     model.dishes.push(normalizedDish);
     model.dishesById.set(normalizedDish.id, normalizedDish);
@@ -684,24 +698,80 @@ function appendFoodDataWarning(container, foodModel) {
   container.appendChild(warning);
 }
 
+/**
+ * Show/hide dish rows (and city sections left empty as a result) per the
+ * chosen food-type filter and free-text search query. Returns counts so the
+ * caller can report how many dishes matched.
+ */
+function applyFoodVisibility(root, filterValue, searchQuery) {
+  const query = (searchQuery || '').trim().toLowerCase();
+  let visibleCount = 0;
+  let totalCount = 0;
+  for (const row of root.querySelectorAll('.food-dish')) {
+    totalCount += 1;
+    const matchesType = filterValue === 'all' || row.dataset.foodType === filterValue;
+    const matchesSearch = query === '' || (row.dataset.searchText || '').includes(query);
+    const visible = matchesType && matchesSearch;
+    row.hidden = !visible;
+    if (visible) visibleCount += 1;
+  }
+  for (const citySection of root.querySelectorAll('.food-city')) {
+    const rows = citySection.querySelectorAll('.food-dish');
+    const anyVisible = Array.from(rows).some((row) => !row.hidden);
+    citySection.hidden = rows.length > 0 && !anyVisible;
+  }
+  return { visibleCount, totalCount };
+}
+
 function updateFoodDishRows(root, tripId, foodModel) {
   const completed = getFoodProgressMap(tripId);
+  const ratings = getFoodRatingMap(tripId);
+  const comments = getFoodCommentMap(tripId);
   for (const checkbox of root.querySelectorAll('.food-dish__checkbox')) {
     const isDone = Boolean(completed[checkbox.dataset.dishId]);
     checkbox.checked = isDone;
     const row = checkbox.closest('.food-dish');
     if (row) row.classList.toggle('food-dish--done', isDone);
   }
+  for (const row of root.querySelectorAll('.food-dish')) {
+    const dishId = row.dataset.dishId;
+    const rating = ratings[dishId] || 0;
+    for (const starInput of row.querySelectorAll('.food-dish__star-input')) {
+      starInput.checked = Number(starInput.value) === rating;
+    }
+    const commentInput = row.querySelector('.food-dish__comment');
+    if (commentInput && document.activeElement !== commentInput) {
+      commentInput.value = comments[dishId] || '';
+    }
+  }
   return getFoodProgress(tripId, foodModel);
+}
+
+/** Display label for a dish's food-type, or null when missing/unknown (neutral fallback). */
+function foodTypeLabel(foodType) {
+  if (foodType === 'vegetarian') return 'Veg';
+  if (foodType === 'classic') return 'Classic';
+  return null;
 }
 
 function renderFoodDish(tripId, dish, onToggle) {
   const completed = getFoodProgressMap(tripId);
+  const ratings = getFoodRatingMap(tripId);
+  const comments = getFoodCommentMap(tripId);
   const li = el('li', 'food-dish');
+  li.dataset.foodType = dish.foodType || 'unknown';
+  li.dataset.dishId = dish.id;
+  li.dataset.searchText = [dish.name, dish.description].filter(Boolean).join(' ').toLowerCase();
   if (completed[dish.id]) li.classList.add('food-dish--done');
 
   const header = el('div', 'food-dish__header');
   header.appendChild(el('h3', 'food-dish__name', dish.name));
+  const typeLabel = foodTypeLabel(dish.foodType);
+  if (typeLabel) {
+    header.appendChild(
+      el('span', `food-dish__type-badge food-dish__type-badge--${dish.foodType}`, typeLabel),
+    );
+  }
   li.appendChild(header);
 
   if (dish.description) {
@@ -727,6 +797,52 @@ function renderFoodDish(tripId, dish, onToggle) {
   doneLabel.appendChild(checkbox);
   doneLabel.appendChild(document.createTextNode('Provato'));
   li.appendChild(doneLabel);
+
+  const currentRating = ratings[dish.id] || 0;
+  const ratingGroup = document.createElement('fieldset');
+  ratingGroup.className = 'food-dish__rating';
+  const ratingLegend = document.createElement('legend');
+  ratingLegend.className = 'food-dish__rating-legend';
+  ratingLegend.textContent = 'Voto';
+  ratingGroup.appendChild(ratingLegend);
+  for (let star = 5; star >= 1; star -= 1) {
+    const starId = `food-rating-${dish.id}-${star}`;
+    const starInput = document.createElement('input');
+    starInput.type = 'radio';
+    starInput.name = `food-rating-${dish.id}`;
+    starInput.id = starId;
+    starInput.value = String(star);
+    starInput.className = 'food-dish__star-input';
+    starInput.checked = currentRating === star;
+    starInput.addEventListener('change', () => {
+      setFoodDishRating(tripId, dish.id, star);
+    });
+    const starLabel = document.createElement('label');
+    starLabel.className = 'food-dish__star-label';
+    starLabel.htmlFor = starId;
+    starLabel.textContent = '★';
+    starLabel.setAttribute('aria-label', `${star} stell${star === 1 ? 'a' : 'e'}`);
+    ratingGroup.appendChild(starInput);
+    ratingGroup.appendChild(starLabel);
+  }
+  li.appendChild(ratingGroup);
+
+  const commentWrap = el('div', 'food-dish__comment-wrap');
+  const commentId = `food-comment-${dish.id}`;
+  const commentLabel = el('label', 'food-dish__comment-label', 'Commento');
+  commentLabel.htmlFor = commentId;
+  const commentInput = document.createElement('textarea');
+  commentInput.id = commentId;
+  commentInput.className = 'food-dish__comment';
+  commentInput.rows = 2;
+  commentInput.value = comments[dish.id] || '';
+  commentInput.placeholder = 'Note personali su questo piatto…';
+  commentInput.addEventListener('input', () => {
+    setFoodDishComment(tripId, dish.id, commentInput.value);
+  });
+  commentWrap.appendChild(commentLabel);
+  commentWrap.appendChild(commentInput);
+  li.appendChild(commentWrap);
 
   return li;
 }
@@ -777,11 +893,67 @@ function renderFood(tripId, itinerary) {
     updateProgressBar(progressBar, progress.done, progress.total);
   };
 
+  // Search
+  const searchWrap = el('div', 'food__search');
+  const searchLabel = el('label', 'food__search-label', 'Cerca un piatto');
+  searchLabel.htmlFor = 'food-search';
+  const searchInput = document.createElement('input');
+  searchInput.type = 'search';
+  searchInput.id = 'food-search';
+  searchInput.className = 'food__search-input';
+  searchInput.placeholder = 'Es. bibimbap, kimchi…';
+  const searchResults = el('p', 'food__search-results');
+  searchResults.setAttribute('aria-live', 'polite');
+  searchWrap.appendChild(searchLabel);
+  searchWrap.appendChild(searchInput);
+  searchWrap.appendChild(searchResults);
+  section.appendChild(searchWrap);
+
+  let currentTypeFilter = 'all';
+  const refreshVisibility = () => {
+    const { visibleCount, totalCount } = applyFoodVisibility(
+      section,
+      currentTypeFilter,
+      searchInput.value,
+    );
+    searchResults.textContent =
+      searchInput.value.trim() === '' ? '' : `${visibleCount} piatto/i su ${totalCount} trovati.`;
+  };
+  searchInput.addEventListener('input', refreshVisibility);
+
+  const hasFoodTypes = foodModel.dishes.some((dish) => dish.foodType);
+  if (hasFoodTypes) {
+    const filterWrap = el('div', 'food__filter');
+    const filterLabel = el('label', 'food__filter-label', 'Filtro piatti');
+    filterLabel.htmlFor = 'food-type-filter';
+    const filterSelect = document.createElement('select');
+    filterSelect.id = 'food-type-filter';
+    filterSelect.className = 'food__filter-select';
+    const filterOptions = [
+      { value: 'all', label: 'Tutti' },
+      { value: 'vegetarian', label: 'Solo vegetariani' },
+      { value: 'classic', label: 'Solo classici' },
+    ];
+    for (const opt of filterOptions) {
+      const option = document.createElement('option');
+      option.value = opt.value;
+      option.textContent = opt.label;
+      filterSelect.appendChild(option);
+    }
+    filterSelect.addEventListener('change', () => {
+      currentTypeFilter = filterSelect.value;
+      refreshVisibility();
+    });
+    filterWrap.appendChild(filterLabel);
+    filterWrap.appendChild(filterSelect);
+    section.appendChild(filterWrap);
+  }
+
   const resetButton = el('button', 'food__reset', 'Azzera progressi Cibo');
   resetButton.type = 'button';
   resetButton.addEventListener('click', () => {
     const confirmed = window.confirm(
-      'Azzerare i piatti provati e le scelte del piatto del giorno? L’operazione non può essere annullata.',
+      'Azzerare i piatti provati, i voti, i commenti e le scelte del piatto del giorno? L’operazione non può essere annullata.',
     );
     if (!confirmed) return;
     resetFoodState(tripId);
