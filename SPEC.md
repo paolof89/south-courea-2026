@@ -405,6 +405,65 @@ Oggetto "money" generalizzato (usato sia in `cost` che in `fare`):
 - `currency`: libera (`EUR`, `KRW`, ...);
 - `estimated`: opzionale, `true` se l'importo è una stima.
 
+### 6.3 Catalogo Cibo (opzionale)
+
+Ogni file viaggio può includere un blocco `food`. Il catalogo è nazionale:
+il suo totale rappresenta l'obiettivo di assaggiare tutti i piatti del Paese,
+non soltanto quelli delle città incluse nell'itinerario. Le città mantengono
+solo riferimenti ai piatti, evitando di duplicarne nome e descrizione.
+
+```json
+"food": {
+  "dishes": [
+    {
+      "id": "dish-example-one",
+      "name": "Nome del piatto",
+      "description": "Breve descrizione verificata del piatto.",
+      "status": "transcribed"
+    },
+    {
+      "id": "dish-example-two",
+      "name": "Nome da verificare",
+      "description": "Descrizione da verificare rispetto alla fonte.",
+      "status": "uncertain",
+      "sourceText": "Testo originale dubbio"
+    }
+  ],
+  "cities": [
+    {
+      "id": "city-example",
+      "name": "Città di esempio",
+      "itineraryCityNames": ["Città dell'itinerario"],
+      "dishIds": ["dish-example-one", "dish-example-two"]
+    }
+  ]
+}
+```
+
+L'esempio usa valori fittizi ed è solo un modello: non va copiato nei dati
+reali senza sostituire ogni valore con informazioni verificate.
+
+Regole:
+
+- `food` è facoltativo; se manca o non contiene piatti, l'app mostra uno
+  stato esplicito di catalogo da compilare;
+- `dishes[]` è il catalogo canonico nazionale. Ogni piatto ha `id`
+  kebab-case stabile e univoco, `name`, `description`, `status` e, soltanto
+  per `status: "uncertain"`, il testo dubbio in `sourceText`;
+- `cities[]` ha `id` e `name` univoci, `itineraryCityNames` con i valori
+  esatti usati in `days[].city` e `dishIds` con riferimenti validi a
+  `dishes[].id`;
+- un valore di `itineraryCityNames` può comparire in una sola sezione città;
+  un `dishId` può invece comparire in più città senza duplicare il piatto;
+- un piatto può non comparire in nessuna città: resta visibile nella sezione
+  nazionale e continua a far parte dell'obiettivo;
+- non creare piatti, descrizioni o associazioni città-piatto per inferenza.
+  Usare `status: "uncertain"` e `sourceText` quando la fonte non è chiara.
+
+La scelta del "Piatto del giorno" e lo stato "Provato" non fanno parte del
+JSON: sono preferenze locali del dispositivo e non vengono pubblicate né
+sincronizzate.
+
 ---
 
 ## 7. Contenuto iniziale
@@ -507,8 +566,10 @@ home del viaggio → giornata):
 ```text
 ./#/
 ./#/trip/korea-2026
+./#/trip/korea-2026/food
 ./#/trip/korea-2026/day/2026-07-26
 ./#/trip/china-2025
+./#/trip/china-2025/food
 ./#/trip/china-2025/day/2025-08-19
 ```
 
@@ -655,6 +716,8 @@ condivisi tra tutti i viaggi. Chiavi suggerite:
 
 ```text
 trip.<tripId>.completedItems   # es. trip.korea-2026.completedItems
+trip.<tripId>.foodProgress     # piatti provati, es. { "dish-id": true }
+trip.<tripId>.dailyDish        # scelta per giornata, es. { "2026-07-26": "dish-id" }
 korea2026.theme
 korea2026.notes
 korea2026.schemaVersion
@@ -675,7 +738,10 @@ Requisiti:
 - gestione sicura di JSON corrotto;
 - default vuoto in caso di errore;
 - versione dello schema;
-- reset separato per completamenti e note, sempre scoped al viaggio aperto.
+- reset separato per completamenti, Cibo e note, sempre scoped al viaggio aperto;
+- i riferimenti Cibo locali a un piatto o a una giornata rimossi dal JSON
+  devono essere ignorati senza errori e senza modificare automaticamente lo
+  storage.
 
 ---
 

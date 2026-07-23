@@ -4,7 +4,7 @@
 
 'use strict';
 
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
 
 const LEGACY_COMPLETED_KEY = 'korea2026.completedItems';
 const LEGACY_TRIP_ID = 'korea-2026';
@@ -16,6 +16,14 @@ const KEYS = {
 
 function completedKey(tripId) {
   return `trip.${tripId}.completedItems`;
+}
+
+function foodProgressKey(tripId) {
+  return `trip.${tripId}.foodProgress`;
+}
+
+function dailyDishKey(tripId) {
+  return `trip.${tripId}.dailyDish`;
 }
 
 function readJSON(key, fallback) {
@@ -88,6 +96,49 @@ export function setItemCompleted(tripId, itemId, done) {
 /** Clears all completed-item state for a given trip. */
 export function resetCompleted(tripId) {
   writeJSON(completedKey(tripId), {});
+  ensureSchemaVersion();
+}
+
+/** Returns a map of dishId -> true for dishes tried during a given trip. */
+export function getFoodProgressMap(tripId) {
+  return readJSON(foodProgressKey(tripId), {});
+}
+
+/** Marks a dish as tried/not tried and persists it for a given trip. */
+export function setFoodDishCompleted(tripId, dishId, done) {
+  const map = getFoodProgressMap(tripId);
+  if (done) {
+    map[dishId] = true;
+  } else {
+    delete map[dishId];
+  }
+  writeJSON(foodProgressKey(tripId), map);
+  ensureSchemaVersion();
+  return map;
+}
+
+/** Returns a map of dayId -> dishId for a given trip's daily selections. */
+export function getDailyDishMap(tripId) {
+  return readJSON(dailyDishKey(tripId), {});
+}
+
+/** Stores or clears the dish selected for a single day. */
+export function setDailyDish(tripId, dayId, dishId) {
+  const map = getDailyDishMap(tripId);
+  if (dishId) {
+    map[dayId] = dishId;
+  } else {
+    delete map[dayId];
+  }
+  writeJSON(dailyDishKey(tripId), map);
+  ensureSchemaVersion();
+  return map;
+}
+
+/** Clears food progress and daily selections for a given trip. */
+export function resetFoodState(tripId) {
+  writeJSON(foodProgressKey(tripId), {});
+  writeJSON(dailyDishKey(tripId), {});
   ensureSchemaVersion();
 }
 

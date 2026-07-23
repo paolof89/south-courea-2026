@@ -12,6 +12,11 @@ import {
   getCompletedMap,
   setItemCompleted,
   resetCompleted,
+  getFoodProgressMap,
+  setFoodDishCompleted,
+  getDailyDishMap,
+  setDailyDish,
+  resetFoodState,
   getTheme,
   setTheme,
 } from './storage.js';
@@ -173,6 +178,99 @@ function el(tag, className, text) {
   return node;
 }
 
+/**
+ * Validates the optional food catalog while preserving all valid entries.
+ * Invalid references are ignored so a typo in one dish cannot break an
+ * itinerary that remains otherwise usable offline.
+ */
+function normalizeFoodData(food) {
+  const model = {
+    dishes: [],
+    dishesById: new Map(),
+    cities: [],
+    cityByItineraryName: new Map(),
+    warnings: [],
+  };
+
+  if (!food || typeof food !== 'object') return model;
+
+  const rawDishes = Array.isArray(food.dishes) ? food.dishes : [];
+  for (const dish of rawDishes) {
+    if (!dish || typeof dish.id !== 'string' || !dish.id || typeof dish.name !== 'string' || !dish.name) {
+      model.warnings.push('Un piatto senza ID o nome valido è stato ignorato.');
+      continue;
+    }
+    if (model.dishesById.has(dish.id)) {
+      model.warnings.push(`Il piatto “${dish.id}” è duplicato ed è stato ignorato.`);
+      continue;
+    }
+    const normalizedDish = {
+      id: dish.id,
+      name: dish.name,
+      description: typeof dish.description === 'string' ? dish.description : null,
+      status: dish.status,
+      sourceText: typeof dish.sourceText === 'string' ? dish.sourceText : null,
+    };
+    model.dishes.push(normalizedDish);
+    model.dishesById.set(normalizedDish.id, normalizedDish);
+  }
+
+  const rawCities = Array.isArray(food.cities) ? food.cities : [];
+  const cityIds = new Set();
+  for (const city of rawCities) {
+    if (!city || typeof city.id !== 'string' || !city.id || typeof city.name !== 'string' || !city.name) {
+      model.warnings.push('Una città gastronomica senza ID o nome valido è stata ignorata.');
+      continue;
+    }
+    if (cityIds.has(city.id)) {
+      model.warnings.push(`La città gastronomica “${city.id}” è duplicata ed è stata ignorata.`);
+      continue;
+    }
+    cityIds.add(city.id);
+
+    const dishIds = [];
+    const dishIdSet = new Set();
+    for (const dishId of Array.isArray(city.dishIds) ? city.dishIds : []) {
+      if (!model.dishesById.has(dishId)) {
+        model.warnings.push(`Il riferimento al piatto “${dishId}” in ${city.name} è stato ignorato.`);
+        continue;
+      }
+      if (!dishIdSet.has(dishId)) {
+        dishIds.push(dishId);
+        dishIdSet.add(dishId);
+      }
+    }
+
+    const itineraryCityNames = [];
+    for (const itineraryCityName of Array.isArray(city.itineraryCityNames)
+      ? city.itineraryCityNames
+      : []) {
+      if (typeof itineraryCityName !== 'string' || !itineraryCityName) continue;
+      if (model.cityByItineraryName.has(itineraryCityName)) {
+        model.warnings.push(
+          `La città dell’itinerario “${itineraryCityName}” è associata a più sezioni Cibo.`,
+        );
+        continue;
+      }
+      itineraryCityNames.push(itineraryCityName);
+    }
+
+    const normalizedCity = { id: city.id, name: city.name, dishIds, itineraryCityNames };
+    model.cities.push(normalizedCity);
+    for (const itineraryCityName of itineraryCityNames) {
+      model.cityByItineraryName.set(itineraryCityName, normalizedCity);
+    }
+  }
+
+  return model;
+}
+
+function getFoodProgress(tripId, foodModel) {
+  const completed = getFoodProgressMap(tripId);
+  const done = foodModel.dishes.filter((dish) => Boolean(completed[dish.id])).length;
+  return { done, total: foodModel.dishes.length };
+}
+
 // ---------- Data loading ----------
 
 async function fetchJson(url) {
@@ -287,6 +385,10 @@ function renderTripHome(tripId, itinerary) {
     section.appendChild(buildProgressBar(done, total, 'Avanzamento del viaggio'));
   }
 
+  const foodLink = el('a', 'home__food-link', 'Cibo');
+  foodLink.href = `#/trip/${tripId}/food`;
+  section.appendChild(foodLink);
+
   // "Vai a oggi" call to action
   const todayWrap = el('div', 'home__today');
   const todayBtn = el('button', 'home__today-btn', 'Vai a oggi');
@@ -390,6 +492,114 @@ function renderTripHome(tripId, itinerary) {
   mainEl.focus();
 
   // Wire search filtering after the list is in the DOM.
+function buildDailyDishSection(tripId, itinerary, day) {
+  const section = el('section', 'day-food');
+  section.setAttribute('aria-labelledby', 'day-food-title');
+  const title = el('h2', 'day-food__title', 'Piatto del giorno');
+  title.id = 'day-food-title';
+  section.appendChild(title);
+
+  const foodModel = normalizeFoodData(itinerary.food);
+  appendFoodDataWarning(section, foodModel);
+  if (foodModel.dishes.length === 0) {
+    section.appendChild(
+      el('p', 'day-food__empty', 'Il catalogo dei piatti non è stato ancora compilato.'),
+    );
+    return section;
+  }
+
+  const city = foodModel.cityByItineraryName.get(day.city);
+  if (!city) {
+    section.appendChild(
+      el('p', 'day-food__empty', `Non ci sono piatti associati a ${day.city}.`),
+    );
+    return section;
+  }
+  if (city.dishIds.length === 0) {
+    section.appendChild(
+      el('p', 'day-food__empty', `Non sono ancora stati inseriti piatti per ${city.name}.`),
+    );
+    return section;
+  }
+
+  const label = el('label', 'day-food__label', 'Scegli il piatto');
+  label.htmlFor = `daily-dish-${day.id}`;
+  section.appendChild(label);
+
+  const select = document.createElement('select');
+  select.id = `daily-dish-${day.id}`;
+  select.className = 'day-food__select';
+  const emptyOption = document.createElement('option');
+  emptyOption.value = '';
+  emptyOption.textContent = 'Nessun piatto selezionato';
+  select.appendChild(emptyOption);
+
+  const dishes = city.dishIds.map((dishId) => foodModel.dishesById.get(dishId));
+  for (const dish of dishes) {
+    const option = document.createElement('option');
+    option.value = dish.id;
+    option.textContent = dish.name;
+    select.appendChild(option);
+  }
+
+  const storedDishId = getDailyDishMap(tripId)[day.id];
+  if (dishes.some((dish) => dish.id === storedDishId)) select.value = storedDishId;
+  section.appendChild(select);
+
+  const selection = el('div', 'day-food__selection');
+  selection.setAttribute('aria-live', 'polite');
+  section.appendChild(selection);
+
+  const renderSelection = () => {
+    clear(selection);
+    const dish = foodModel.dishesById.get(select.value);
+    if (!dish) {
+      selection.appendChild(el('p', 'day-food__selection-empty', 'Scegli un piatto per segnarlo come provato.'));
+      return;
+    }
+
+    selection.appendChild(el('h3', 'day-food__dish-name', dish.name));
+    if (dish.description) {
+      selection.appendChild(el('p', 'day-food__dish-description', dish.description));
+    }
+
+    const dailySelections = getDailyDishMap(tripId);
+    const repeatedDays = Object.entries(dailySelections).filter(
+      ([otherDayId, otherDishId]) => otherDayId !== day.id && otherDishId === dish.id,
+    );
+    const notices = [];
+    if (getFoodProgressMap(tripId)[dish.id]) {
+      notices.push('Questo piatto è già segnato come provato: conta una sola volta per l’obiettivo nazionale.');
+    }
+    if (repeatedDays.length > 0) {
+      notices.push('Questo piatto è già assegnato a un’altra giornata: la ripetizione è consentita.');
+    }
+    for (const notice of notices) {
+      selection.appendChild(el('p', 'day-food__notice', notice));
+    }
+
+    const triedLabel = el('label', 'day-food__try-toggle');
+    const triedCheckbox = document.createElement('input');
+    triedCheckbox.type = 'checkbox';
+    triedCheckbox.checked = Boolean(getFoodProgressMap(tripId)[dish.id]);
+    triedCheckbox.addEventListener('change', () => {
+      setFoodDishCompleted(tripId, dish.id, triedCheckbox.checked);
+      renderSelection();
+    });
+    triedLabel.appendChild(triedCheckbox);
+    triedLabel.appendChild(document.createTextNode('Provato'));
+    selection.appendChild(triedLabel);
+  };
+
+  select.addEventListener('change', () => {
+    setDailyDish(tripId, day.id, select.value || null);
+    renderSelection();
+  });
+  renderSelection();
+
+  return section;
+}
+
   const cards = Array.from(list.querySelectorAll('.day-card'));
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
@@ -437,6 +647,162 @@ function updateProgressBar(wrap, done, total) {
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
     if (fill) fill.style.width = `${pct}%`;
   }
+}
+
+function appendFoodDataWarning(container, foodModel) {
+  if (foodModel.warnings.length === 0) return;
+  const warning = el(
+    'p',
+    'food-data-warning',
+    'Alcune voci della sezione Cibo non sono valide e non vengono mostrate.',
+  );
+  warning.setAttribute('role', 'status');
+  container.appendChild(warning);
+}
+
+function updateFoodDishRows(root, tripId, foodModel) {
+  const completed = getFoodProgressMap(tripId);
+  for (const checkbox of root.querySelectorAll('.food-dish__checkbox')) {
+    const isDone = Boolean(completed[checkbox.dataset.dishId]);
+    checkbox.checked = isDone;
+    const row = checkbox.closest('.food-dish');
+    if (row) row.classList.toggle('food-dish--done', isDone);
+  }
+  return getFoodProgress(tripId, foodModel);
+}
+
+function renderFoodDish(tripId, dish, onToggle) {
+  const completed = getFoodProgressMap(tripId);
+  const li = el('li', 'food-dish');
+  if (completed[dish.id]) li.classList.add('food-dish--done');
+
+  const header = el('div', 'food-dish__header');
+  header.appendChild(el('h3', 'food-dish__name', dish.name));
+  li.appendChild(header);
+
+  if (dish.description) {
+    li.appendChild(el('p', 'food-dish__description', dish.description));
+  }
+  if (dish.status === 'uncertain') {
+    li.appendChild(el('span', 'food-dish__uncertain', 'Da verificare'));
+    if (dish.sourceText) {
+      li.appendChild(el('p', 'food-dish__source-text', `Testo originale: «${dish.sourceText}»`));
+    }
+  }
+
+  const doneLabel = el('label', 'food-dish__done-toggle');
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.className = 'food-dish__checkbox';
+  checkbox.dataset.dishId = dish.id;
+  checkbox.checked = Boolean(completed[dish.id]);
+  checkbox.addEventListener('change', () => {
+    setFoodDishCompleted(tripId, dish.id, checkbox.checked);
+    if (onToggle) onToggle();
+  });
+  doneLabel.appendChild(checkbox);
+  doneLabel.appendChild(document.createTextNode('Provato'));
+  li.appendChild(doneLabel);
+
+  return li;
+}
+
+function renderFood(tripId, itinerary) {
+  clear(mainEl);
+  const foodModel = normalizeFoodData(itinerary.food);
+
+  const section = el('section', 'food');
+  section.setAttribute('aria-labelledby', 'food-title');
+
+  const backLink = el('a', 'food__back', '← Indice del viaggio');
+  backLink.href = `#/trip/${tripId}`;
+  section.appendChild(backLink);
+
+  const h1 = el('h1', 'food__title', 'Cibo');
+  h1.id = 'food-title';
+  section.appendChild(h1);
+  section.appendChild(
+    el('p', 'food__intro', 'Obiettivo: assaggiare tutti i piatti del Paese.'),
+  );
+
+  appendFoodDataWarning(section, foodModel);
+
+  if (foodModel.dishes.length === 0) {
+    section.appendChild(
+      el(
+        'p',
+        'food__empty',
+        'Il catalogo dei piatti non è stato ancora compilato per questo viaggio.',
+      ),
+    );
+    mainEl.appendChild(section);
+    mainEl.focus();
+    return;
+  }
+
+  const initialProgress = getFoodProgress(tripId, foodModel);
+  const progressBar = buildProgressBar(
+    initialProgress.done,
+    initialProgress.total,
+    'Piatti provati',
+  );
+  section.appendChild(progressBar);
+
+  const refreshFoodState = () => {
+    const progress = updateFoodDishRows(section, tripId, foodModel);
+    updateProgressBar(progressBar, progress.done, progress.total);
+  };
+
+  const resetButton = el('button', 'food__reset', 'Azzera progressi Cibo');
+  resetButton.type = 'button';
+  resetButton.addEventListener('click', () => {
+    const confirmed = window.confirm(
+      'Azzerare i piatti provati e le scelte del piatto del giorno? L’operazione non può essere annullata.',
+    );
+    if (!confirmed) return;
+    resetFoodState(tripId);
+    refreshFoodState();
+  });
+  section.appendChild(resetButton);
+
+  const mappedDishIds = new Set();
+  for (const city of foodModel.cities) {
+    const citySection = el('section', 'food-city');
+    citySection.setAttribute('aria-labelledby', `food-city-${city.id}`);
+    const cityTitle = el('h2', 'food-city__title', city.name);
+    cityTitle.id = `food-city-${city.id}`;
+    citySection.appendChild(cityTitle);
+
+    if (city.dishIds.length === 0) {
+      citySection.appendChild(el('p', 'food-city__empty', 'Nessun piatto inserito per questa città.'));
+    } else {
+      const list = el('ul', 'food-dish-list');
+      for (const dishId of city.dishIds) {
+        mappedDishIds.add(dishId);
+        list.appendChild(renderFoodDish(tripId, foodModel.dishesById.get(dishId), refreshFoodState));
+      }
+      citySection.appendChild(list);
+    }
+    section.appendChild(citySection);
+  }
+
+  const otherDishes = foodModel.dishes.filter((dish) => !mappedDishIds.has(dish.id));
+  if (otherDishes.length > 0) {
+    const otherSection = el('section', 'food-city');
+    otherSection.setAttribute('aria-labelledby', 'food-other-title');
+    const otherTitle = el('h2', 'food-city__title', 'Altri piatti del Paese');
+    otherTitle.id = 'food-other-title';
+    otherSection.appendChild(otherTitle);
+    const list = el('ul', 'food-dish-list');
+    for (const dish of otherDishes) {
+      list.appendChild(renderFoodDish(tripId, dish, refreshFoodState));
+    }
+    otherSection.appendChild(list);
+    section.appendChild(otherSection);
+  }
+
+  mainEl.appendChild(section);
+  mainEl.focus();
 }
 
 
@@ -497,6 +863,10 @@ function renderDay(tripId, itinerary, dayId) {
   indexBtn.href = `#/trip/${tripId}`;
   nav.appendChild(indexBtn);
 
+  const foodBtn = el('a', 'day-nav__btn', 'Cibo');
+  foodBtn.href = `#/trip/${tripId}/food`;
+  nav.appendChild(foodBtn);
+
   const nextBtn = el('a', 'day-nav__btn', 'Successivo →');
   if (next) {
     nextBtn.href = `#/trip/${tripId}/day/${next.id}`;
@@ -533,6 +903,7 @@ function renderDay(tripId, itinerary, dayId) {
   }
 
   article.appendChild(header);
+  article.appendChild(buildDailyDishSection(tripId, itinerary, day));
 
   // Body
   if (!hasItems) {
@@ -920,9 +1291,14 @@ function labelForTransferMode(mode) {
 
 function parseHash() {
   const hash = window.location.hash || '#/';
-  // Expected forms: "#/", "#/trip/korea-2026", "#/trip/korea-2026/day/2026-07-26"
+  // Expected forms: "#/", "#/trip/korea-2026", "#/trip/korea-2026/food",
+  // "#/trip/korea-2026/day/2026-07-26"
   if (hash === '#/' || hash === '#' || hash === '') {
     return { route: 'picker' };
+  }
+  const foodMatch = hash.match(/^#\/trip\/([a-z0-9-]+)\/food$/);
+  if (foodMatch) {
+    return { route: 'food', tripId: foodMatch[1] };
   }
   const dayMatch = hash.match(/^#\/trip\/([a-z0-9-]+)\/day\/(\d{4}-\d{2}-\d{2})$/);
   if (dayMatch) {
@@ -984,8 +1360,8 @@ async function render() {
     return;
   }
 
-  // tripHome or day: the trip must exist in the index, and its data may need
-  // to be lazily fetched on first visit.
+  // tripHome, food or day: the trip must exist in the index, and its data
+  // may need to be lazily fetched on first visit.
   const tripId = parsed.tripId;
   const entry = state.tripsIndex.find((t) => t.id === tripId);
   if (!entry) {
@@ -1027,7 +1403,9 @@ async function render() {
   state.currentTripId = tripId;
   updateFooterForTrip(tripId, itinerary);
 
-  if (parsed.route === 'day') {
+  if (parsed.route === 'food') {
+    renderFood(tripId, itinerary);
+  } else if (parsed.route === 'day') {
     renderDay(tripId, itinerary, parsed.dayId);
   } else {
     renderTripHome(tripId, itinerary);

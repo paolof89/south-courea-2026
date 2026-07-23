@@ -63,6 +63,53 @@ summarizes the operational rules to apply directly to the JSON.
   "placeholder"`; set to `"complete"` only when every day has real, verified
   items.
 
+## Optional `food` catalog
+
+The optional top-level `food` object is a country-wide checklist. Its dishes
+are public itinerary content; the choice of a daily dish and the "tried"
+checkbox are intentionally stored only in the visitor's `localStorage` and
+must never be added to the JSON.
+
+```json
+"food": {
+  "dishes": [
+    {
+      "id": "dish-example-one",
+      "name": "Replace with the verified dish name",
+      "description": "Replace with a factual description.",
+      "status": "transcribed"
+    }
+  ],
+  "cities": [
+    {
+      "id": "city-example",
+      "name": "Replace with the city name",
+      "itineraryCityNames": ["Exact days[].city value"],
+      "dishIds": ["dish-example-one"]
+    }
+  ]
+}
+```
+
+The example is a template only. Replace every value with real, sourced trip
+content before adding it to a trip file.
+
+- `dishes` is the canonical national catalog. Every entry needs a stable,
+  unique kebab-case `id`, plus `name`, `description` and `status`.
+- Use `status: "uncertain"` and preserve unclear source wording in
+  `sourceText`; do not replace uncertain information with a guess.
+- `cities` groups dishes by availability or typicity. Each city needs a
+  unique stable `id`, display `name`, exact `itineraryCityNames` copied from
+  one or more `days[].city` values, and `dishIds` pointing to existing dishes.
+- A day-city name can belong to only one food city. A dish can be referenced
+  from multiple cities without duplicating its catalog entry.
+- A dish may be absent from every `cities[].dishIds`; it remains part of the
+  national goal and is shown as an "other country dish" in the UI.
+- Never invent dishes, descriptions, city associations or regional claims.
+  Leave `food` absent until there is a real source to transcribe.
+- Update `trip.lastUpdated` whenever the food catalog changes, then validate
+  the whole JSON with the PowerShell command below.
+
 ## `days[]` entries
 
 One entry per calendar day of the trip, in chronological order, with no gaps.

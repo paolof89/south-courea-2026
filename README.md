@@ -25,6 +25,8 @@ Nessun framework, nessun backend, nessuna dipendenza esterna. Vedi
 - [x] Service Worker con app shell e dati di tutti i viaggi in cache
 - [x] Tappe completate salvate per viaggio (namespace separato in
       `localStorage`), tema condiviso tra i viaggi
+- [x] Sezione Cibo per viaggio, con checklist nazionale e piatto del giorno
+   locale al dispositivo
 - [ ] Icone PWA 192/512 e maskable
 - [ ] "Vai a oggi" cross-trip, filtri sul selettore viaggi (fuori scope di
       questo incremento)
@@ -32,6 +34,58 @@ Nessun framework, nessun backend, nessuna dipendenza esterna. Vedi
 **Nessun dato è inventato.** I giorni per cui non sono ancora disponibili i
 dettagli sono marcati come `placeholder` e la vista di dettaglio mostra un
 avviso esplicito.
+
+## Catalogo Cibo
+
+Ogni viaggio espone la sezione Cibo all'indirizzo
+`#/trip/<id>/food`. Il catalogo contiene tutti i piatti dell'intero Paese;
+le sezioni città sono solo un modo per indicare dove sono tipici o reperibili.
+Il progresso è deduplicato: provare lo stesso piatto in più città conta una
+sola volta nell'obiettivo nazionale.
+
+Il catalogo è opzionale e va aggiunto al livello principale del JSON del
+viaggio. Questo è un modello da sostituire interamente con dati verificati,
+non un elenco da copiare nei viaggi reali:
+
+```json
+"food": {
+   "dishes": [
+      {
+         "id": "dish-example-one",
+         "name": "Nome del piatto",
+         "description": "Descrizione fattuale verificata.",
+         "status": "transcribed"
+      }
+   ],
+   "cities": [
+      {
+         "id": "city-example",
+         "name": "Città",
+         "itineraryCityNames": ["Valore esatto di days[].city"],
+         "dishIds": ["dish-example-one"]
+      }
+   ]
+}
+```
+
+- `dishes` è il catalogo nazionale: ogni `id` deve essere stabile, univoco e
+   kebab-case.
+- `cities[].dishIds` deve contenere solo ID presenti in `dishes`; un piatto
+   può essere presente in più città senza essere duplicato.
+- `itineraryCityNames` collega una sezione Cibo ai valori esatti di
+   `days[].city`, così il selettore "Piatto del giorno" mostra soltanto i
+   piatti della città della giornata.
+- Per fonti dubbie usare `status: "uncertain"` e `sourceText`; non inventare
+   descrizioni o associazioni regionali.
+- Un piatto non associato a una città resta comunque nel catalogo nazionale.
+
+La selezione del piatto del giorno e la spunta "Provato" vengono salvate
+solo in `localStorage`, per viaggio e sul dispositivo corrente. Non sono
+pubblicate nel JSON, non vengono sincronizzate e si azzerano soltanto con il
+pulsante dedicato nella sezione Cibo.
+
+Le regole complete per modificare i JSON sono in
+[.github/instructions/itinerary-data.instructions.md](.github/instructions/itinerary-data.instructions.md).
 
 
 ## Avvio locale
