@@ -13,110 +13,282 @@
       {
         "id": "dish-bibimbap",
         "name": "Bibimbap",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Riso con verdure di stagione condite (namul) e gochujang; si rende vegetariano omettendo carne e uovo. Jeonju ne è la patria più celebre."
       },
       {
         "id": "dish-japchae",
         "name": "Japchae",
+        "food-type": "vegetarian",
         "status": "transcribed",
-        "description": "Vermicelli di patata dolce (glass noodles) saltati con verdure e salsa soia-sesamo; piatto delle feste, facilmente vegetariano chiedendo senza carne."
+        "description": "Vermicelli di patata dolce (glass noodles) saltati con verdure e salsa soia-sesamo; piatto delle feste, spesso con manzo ma facilmente vegetariano."
       },
       {
         "id": "dish-doenjang-jjigae",
         "name": "Doenjang-jjigae",
+        "food-type": "vegetarian",
         "status": "transcribed",
-        "description": "Zuppa densa di pasta di soia fermentata con tofu e verdure; chiedere «gogi eopsi» (senza carne), ma il brodo base può contenere acciughe."
+        "description": "Zuppa densa di pasta di soia fermentata con tofu e verdure; per la versione veg chiedere «gogi eopsi», ma il brodo base può contenere acciughe."
       },
       {
         "id": "dish-gimbap-yachae",
         "name": "Gimbap vegetariano (yachae-gimbap)",
+        "food-type": "vegetarian",
         "status": "transcribed",
-        "description": "Rotolini di riso e alga con ripieno di sole verdure; la versione vegetale è standard in ogni gimbap-jip."
+        "description": "Rotolini di riso e alga; la versione di sole verdure è standard in ogni gimbap-jip, quella comune include manzo o tonno."
       },
       {
         "id": "dish-tteokbokki",
         "name": "Tteokbokki",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Gnocchi di riso in salsa piccante di gochujang; spesso vegetariano, ma talvolta include pasta di pesce (eomuk): verificare."
       },
       {
         "id": "dish-bindaetteok",
         "name": "Bindaetteok",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Frittella di fagioli mung macinati con verdure; vegetariana, diffusa nei mercati tradizionali."
       },
       {
         "id": "dish-hotteok",
         "name": "Hotteok",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Frittella dolce fritta ripiena di zucchero di canna e cannella; street food vegetariano."
       },
       {
         "id": "dish-temple-food",
         "name": "Cucina dei templi (sachal eumsik)",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Cucina buddista interamente vegana (niente carne, pesce, uova né aglio/cipolla). A Seoul ristoranti rinomati nella zona Insadong/Anguk (es. Balwoo Gongyang)."
       },
       {
+        "id": "dish-kimchi",
+        "name": "Kimchi",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Cavolo cinese fermentato con peperoncino, accompagnamento onnipresente; spesso contiene gamberetti salati o salsa di pesce (non sempre vegetariano)."
+      },
+      {
+        "id": "dish-bulgogi",
+        "name": "Bulgogi",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Manzo a fettine marinato in salsa di soia, aglio, zucchero e sesamo, poi grigliato; si avvolge in lattuga con ssamjang."
+      },
+      {
+        "id": "dish-samgyeopsal",
+        "name": "Samgyeopsal",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Pancetta di maiale grigliata al tavolo, non marinata; si mangia avvolta nella lattuga con aglio, ssamjang e kimchi. Classico del BBQ coreano."
+      },
+      {
+        "id": "dish-galbi",
+        "name": "Galbi",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Costine di manzo marinate in salsa di soia, aglio e sesamo e grigliate; dolci e tenere, tipiche del BBQ coreano."
+      },
+      {
+        "id": "dish-kimchi-jjigae",
+        "name": "Kimchi-jjigae",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Zuppa saporita di kimchi maturo, di norma con maiale e tofu; piatto casalingo per eccellenza."
+      },
+      {
+        "id": "dish-samgyetang",
+        "name": "Samgyetang",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Zuppa di pollo intero ripieno di riso glutinoso, ginseng, aglio e giuggiole; ricostituente estivo (boyangsik)."
+      },
+      {
+        "id": "dish-naengmyeon",
+        "name": "Naengmyeon",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Noodles freddi di grano saraceno in brodo ghiacciato (spesso di manzo) con cetriolo, pera e uovo; piatto estivo rinfrescante."
+      },
+      {
+        "id": "dish-jjajangmyeon",
+        "name": "Jjajangmyeon",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Noodles conditi con salsa densa di fagioli neri fermentati (chunjang) e maiale; piatto coreano-cinese molto popolare."
+      },
+      {
+        "id": "dish-sundae",
+        "name": "Sundae",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Insaccato coreano di sanguinaccio ripieno di vermicelli e verdure; street food dei mercati (non vegetariano)."
+      },
+      {
+        "id": "dish-haemul-pajeon",
+        "name": "Haemul-pajeon",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Frittella di cipollotto e frutti di mare; ottima in abbinamento al makgeolli."
+      },
+      {
+        "id": "dish-seolleongtang",
+        "name": "Seolleongtang",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Zuppa lattiginosa di ossa e tagli di manzo sobbollite a lungo, servita con riso e kimchi; delicatezza tipica di Seoul."
+      },
+      {
         "id": "dish-heotjesabap",
         "name": "Heotjesabap",
+        "food-type": "vegetarian",
         "status": "transcribed",
-        "description": "Variante di bibimbap di Andong condita con salsa di soia anziché gochujang, con diverse namul sul riso bianco; la ciotola riso-verdure è vegetariana (nel set completo pesce e jeon sono a parte)."
+        "description": "Variante di bibimbap di Andong condita con salsa di soia anziché gochujang, con diverse namul sul riso; la ciotola riso-verdure è vegetariana (nel set pesce e jeon sono a parte)."
+      },
+      {
+        "id": "dish-andong-jjimdak",
+        "name": "Andong-jjimdak",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Pollo brasato con glass noodles e verdure in salsa di soia, dolce e leggermente piccante; specialità di Andong (via dei jjimdak)."
+      },
+      {
+        "id": "dish-andong-godeungeo",
+        "name": "Sgombro salato di Andong (gan-godeungeo)",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Sgombro salato e grigliato, storica specialità di Andong, città interna che conservava così il pesce."
       },
       {
         "id": "dish-hwangnam-ppang",
         "name": "Hwangnam-ppang (pane di Gyeongju)",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Piccolo dolce ripieno di pasta di fagioli rossi, specialità di Gyeongju dal 1939; impasto di farina e uova (ovo-vegetariano)."
       },
       {
         "id": "dish-ssambap",
         "name": "Ssambap",
+        "food-type": "vegetarian",
         "status": "transcribed",
-        "description": "Riso e contorni da avvolgere in foglie fresche (lattuga, perilla); vegetariano se si avvolgono solo verdure con doenjang. Tipico di Gyeongju."
+        "description": "Riso e contorni da avvolgere in foglie fresche (lattuga, perilla); tradizionalmente con maiale/manzo grigliati, ma facile da tenere vegetariano. Tipico di Gyeongju."
+      },
+      {
+        "id": "dish-napjak-mandu",
+        "name": "Napjak-mandu",
+        "food-type": "vegetarian",
+        "status": "transcribed",
+        "description": "Ravioli piatti di Daegu con sottile ripieno di glass noodles e verdure; vegetariani. Tipici del mercato Seomun."
+      },
+      {
+        "id": "dish-jjim-galbi",
+        "name": "Jjim-galbi di Daegu",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Costine di manzo brasate in stile Daegu (zona Dongin-dong), particolarmente piccanti con aglio e peperoncino."
       },
       {
         "id": "dish-ssiat-hotteok",
         "name": "Ssiat-hotteok",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Versione di Busan dell'hotteok, ripiena di semi e frutta secca (girasole, zucca, arachidi) con zucchero e cannella; vegetariana. Celebre a BIFF Square e Gukje Market."
       },
       {
         "id": "dish-bibim-dangmyeon",
         "name": "Bibim-dangmyeon",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Glass noodles freddi conditi con salsa piccante di gochujang; street food di Busan, di norma vegetariano."
       },
       {
-        "id": "dish-napjak-mandu",
-        "name": "Napjak-mandu",
+        "id": "dish-dwaeji-gukbap",
+        "name": "Dwaeji-gukbap",
+        "food-type": "classic",
         "status": "transcribed",
-        "description": "Ravioli piatti di Daegu con sottile ripieno di glass noodles e verdure; vegetariani. Tipici del mercato Seomun."
+        "description": "Zuppa di riso in brodo di maiale, servita con condimenti da regolare a piacere; piatto simbolo di Busan."
+      },
+      {
+        "id": "dish-milmyeon",
+        "name": "Milmyeon",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Noodles freddi di frumento in brodo (di norma di manzo/pollo), nati a Busan; classico rinfrescante estivo."
+      },
+      {
+        "id": "dish-eomuk",
+        "name": "Eomuk (crocchette di pesce)",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Crocchette di pesce, specialità del porto di Busan; servite su spiedino, spesso con una tazza di brodo caldo."
+      },
+      {
+        "id": "dish-kongnamul-gukbap",
+        "name": "Kongnamul-gukbap",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Zuppa di riso e germogli di soia, colazione simbolo di Jeonju; brodo di acciughe e alga con gamberetti salati (non vegetariano)."
+      },
+      {
+        "id": "dish-nokcha-ice-cream",
+        "name": "Gelato al tè verde (nokcha)",
+        "food-type": "vegetarian",
+        "status": "transcribed",
+        "description": "Soft-serve al tè verde, specialità di Boseong (raggiungibile da Suncheon), cuore della regione coreana del tè verde; vegetariano."
+      },
+      {
+        "id": "dish-kkomak",
+        "name": "Kkomak (arche)",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Arche (blood clams) condite, specialità dell'area di Beolgyo/Suncheon; servite condite o mescolate al riso in bibimbap."
       },
       {
         "id": "dish-omegi-tteok",
         "name": "Omegi-tteok",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Dolcetto di riso di Jeju in pasta di miglio glutinoso, ricoperto di fagioli rossi (a volte artemisia); vegetariano. Al mercato Dongmun."
       },
       {
         "id": "dish-bingtteok",
         "name": "Bingtteok",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Crêpe sottile di grano saraceno di Jeju arrotolata su un ripieno di ravanello condito; vegetariana."
       },
       {
         "id": "dish-hallabong",
         "name": "Hallabong",
+        "food-type": "vegetarian",
         "status": "transcribed",
         "description": "Agrume dolce simbolo di Jeju (varietà di mandarino), succoso e facile da sbucciare; vegetariano."
       },
       {
-        "id": "dish-nokcha-ice-cream",
-        "name": "Gelato al tè verde (nokcha)",
+        "id": "dish-heuk-dwaeji",
+        "name": "Maiale nero di Jeju (heuk-dwaeji)",
+        "food-type": "classic",
         "status": "transcribed",
-        "description": "Soft-serve al tè verde, specialità di Boseong (raggiungibile da Suncheon), cuore della regione coreana del tè verde; vegetariano."
+        "description": "Tagli del maiale nero autoctono di Jeju grigliati al BBQ; una delle specialità più note dell'isola."
+      },
+      {
+        "id": "dish-galchi",
+        "name": "Galchi (pesce sciabola)",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Pesce sciabola di Jeju, grigliato (galchi-gui) o brasato in umido piccante (galchi-jorim)."
+      },
+      {
+        "id": "dish-jeonbokjuk",
+        "name": "Jeonbokjuk (porridge di abalone)",
+        "food-type": "classic",
+        "status": "transcribed",
+        "description": "Porridge di riso con abalone, delicato e nutriente; classico di Jeju."
       }
     ],
     "cities": [
@@ -127,7 +299,8 @@
           "Seoul"
         ],
         "dishIds": [
-          "dish-temple-food"
+          "dish-temple-food",
+          "dish-seolleongtang"
         ]
       },
       {
@@ -137,7 +310,9 @@
           "Andong"
         ],
         "dishIds": [
-          "dish-heotjesabap"
+          "dish-heotjesabap",
+          "dish-andong-jjimdak",
+          "dish-andong-godeungeo"
         ]
       },
       {
@@ -158,7 +333,8 @@
           "Daegu"
         ],
         "dishIds": [
-          "dish-napjak-mandu"
+          "dish-napjak-mandu",
+          "dish-jjim-galbi"
         ]
       },
       {
@@ -169,7 +345,10 @@
         ],
         "dishIds": [
           "dish-ssiat-hotteok",
-          "dish-bibim-dangmyeon"
+          "dish-bibim-dangmyeon",
+          "dish-dwaeji-gukbap",
+          "dish-milmyeon",
+          "dish-eomuk"
         ]
       },
       {
@@ -179,7 +358,8 @@
           "Jeonju"
         ],
         "dishIds": [
-          "dish-bibimbap"
+          "dish-bibimbap",
+          "dish-kongnamul-gukbap"
         ]
       },
       {
@@ -189,7 +369,8 @@
           "Suncheon"
         ],
         "dishIds": [
-          "dish-nokcha-ice-cream"
+          "dish-nokcha-ice-cream",
+          "dish-kkomak"
         ]
       },
       {
@@ -201,7 +382,10 @@
         "dishIds": [
           "dish-omegi-tteok",
           "dish-bingtteok",
-          "dish-hallabong"
+          "dish-hallabong",
+          "dish-heuk-dwaeji",
+          "dish-galchi",
+          "dish-jeonbokjuk"
         ]
       }
     ]
@@ -3359,7 +3543,7 @@
       "dayNumber": 18,
       "date": "2026-08-12",
       "city": "Seoul",
-      "summary": "Rientro a Seoul (Gimpo)",
+      "summary": "Rientro a Seoul (Gimpo) e pomeriggio in città: Gangnam, COEX/Starfield, picnic all'Hangang, Hongdae",
       "transferSummary": "Jeju → aereo → Seoul",
       "detailStatus": "transcribed",
       "items": [
@@ -3421,6 +3605,164 @@
             "Volo confermato",
             "Da Gimpo al centro: metro / AREX (~30–40 min)"
           ]
+        },
+        {
+          "id": "2026-08-12-gangnam-style-sculpture",
+          "time": "13:00",
+          "type": "visit",
+          "title": "Gangnam Style Sculpture",
+          "description": "Scultura delle mani ispirata a «Gangnam Style», nei pressi del COEX.",
+          "durationMinutes": 15,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gangnam Style Sculpture",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gangnam Style sculpture COEX Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": null,
+          "notes": [
+            "Pomeriggio libero dopo l'arrivo a Gimpo"
+          ]
+        },
+        {
+          "id": "2026-08-12-coex-starfield",
+          "time": "13:30",
+          "type": "market",
+          "title": "COEX Mall + Starfield Library",
+          "description": "Shopping al COEX Mall e visita alla Starfield Library.",
+          "durationMinutes": 120,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Starfield Library (COEX Mall)",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Starfield Library COEX Mall Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": null,
+            "notes": "A piedi"
+          },
+          "notes": [
+            "Shopping"
+          ]
+        },
+        {
+          "id": "2026-08-12-bongeunsa-temple",
+          "time": "15:15",
+          "type": "visit",
+          "title": "Bongeunsa Temple",
+          "description": "Tempio buddista nel quartiere di Gangnam.",
+          "durationMinutes": 60,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Bongeunsa Temple",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Bongeunsa Temple Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "walk",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-12-gangnam-shopping",
+          "time": "16:30",
+          "type": "market",
+          "title": "Gangnam (vie dello shopping)",
+          "description": "Vie dello shopping come Gangnam-daero. Prevista la cena in zona.",
+          "durationMinutes": 150,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Gangnam-daero",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Gangnam-daero Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": [
+            "Prendere cena!!"
+          ]
+        },
+        {
+          "id": "2026-08-12-yeouido-hangang-park",
+          "time": "19:00",
+          "type": "visit",
+          "title": "Picnic a Yeouido Hangang Park",
+          "description": "Picnic serale lungo il fiume Han, al parco di Yeouido.",
+          "durationMinutes": 90,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Yeouido Hangang Park",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Yeouido Hangang Park Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "subway",
+            "durationMinutes": 20,
+            "notes": null
+          },
+          "notes": []
+        },
+        {
+          "id": "2026-08-12-hongdae",
+          "time": "21:15",
+          "type": "visit",
+          "title": "Hongdae",
+          "description": "Quartiere vivace di Hongdae: locali, street food e vita notturna.",
+          "durationMinutes": null,
+          "cost": null,
+          "status": "transcribed",
+          "location": {
+            "name": "Hongdae",
+            "city": "Seoul",
+            "country": "South Korea",
+            "latitude": null,
+            "longitude": null,
+            "googleMapsQuery": "Hongdae Seoul",
+            "naverMapsUrl": null,
+            "verificationStatus": "unverified"
+          },
+          "transferFromPrevious": {
+            "mode": "bus",
+            "durationMinutes": 30,
+            "notes": null
+          },
+          "notes": []
         }
       ]
     },
