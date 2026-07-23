@@ -5,8 +5,206 @@
     "startDate": "2026-07-26",
     "endDate": "2026-08-13",
     "timezone": "Asia/Seoul",
-    "lastUpdated": "2026-07-17",
+    "lastUpdated": "2026-07-23",
     "contentStatus": "partial"
+  },
+  "food": {
+    "dishes": [
+      {
+        "id": "dish-bibimbap",
+        "name": "Bibimbap",
+        "status": "transcribed",
+        "description": "Riso con verdure di stagione condite (namul) e gochujang; si rende vegetariano omettendo carne e uovo. Jeonju ne è la patria più celebre."
+      },
+      {
+        "id": "dish-japchae",
+        "name": "Japchae",
+        "status": "transcribed",
+        "description": "Vermicelli di patata dolce (glass noodles) saltati con verdure e salsa soia-sesamo; piatto delle feste, facilmente vegetariano chiedendo senza carne."
+      },
+      {
+        "id": "dish-doenjang-jjigae",
+        "name": "Doenjang-jjigae",
+        "status": "transcribed",
+        "description": "Zuppa densa di pasta di soia fermentata con tofu e verdure; chiedere «gogi eopsi» (senza carne), ma il brodo base può contenere acciughe."
+      },
+      {
+        "id": "dish-gimbap-yachae",
+        "name": "Gimbap vegetariano (yachae-gimbap)",
+        "status": "transcribed",
+        "description": "Rotolini di riso e alga con ripieno di sole verdure; la versione vegetale è standard in ogni gimbap-jip."
+      },
+      {
+        "id": "dish-tteokbokki",
+        "name": "Tteokbokki",
+        "status": "transcribed",
+        "description": "Gnocchi di riso in salsa piccante di gochujang; spesso vegetariano, ma talvolta include pasta di pesce (eomuk): verificare."
+      },
+      {
+        "id": "dish-bindaetteok",
+        "name": "Bindaetteok",
+        "status": "transcribed",
+        "description": "Frittella di fagioli mung macinati con verdure; vegetariana, diffusa nei mercati tradizionali."
+      },
+      {
+        "id": "dish-hotteok",
+        "name": "Hotteok",
+        "status": "transcribed",
+        "description": "Frittella dolce fritta ripiena di zucchero di canna e cannella; street food vegetariano."
+      },
+      {
+        "id": "dish-temple-food",
+        "name": "Cucina dei templi (sachal eumsik)",
+        "status": "transcribed",
+        "description": "Cucina buddista interamente vegana (niente carne, pesce, uova né aglio/cipolla). A Seoul ristoranti rinomati nella zona Insadong/Anguk (es. Balwoo Gongyang)."
+      },
+      {
+        "id": "dish-heotjesabap",
+        "name": "Heotjesabap",
+        "status": "transcribed",
+        "description": "Variante di bibimbap di Andong condita con salsa di soia anziché gochujang, con diverse namul sul riso bianco; la ciotola riso-verdure è vegetariana (nel set completo pesce e jeon sono a parte)."
+      },
+      {
+        "id": "dish-hwangnam-ppang",
+        "name": "Hwangnam-ppang (pane di Gyeongju)",
+        "status": "transcribed",
+        "description": "Piccolo dolce ripieno di pasta di fagioli rossi, specialità di Gyeongju dal 1939; impasto di farina e uova (ovo-vegetariano)."
+      },
+      {
+        "id": "dish-ssambap",
+        "name": "Ssambap",
+        "status": "transcribed",
+        "description": "Riso e contorni da avvolgere in foglie fresche (lattuga, perilla); vegetariano se si avvolgono solo verdure con doenjang. Tipico di Gyeongju."
+      },
+      {
+        "id": "dish-ssiat-hotteok",
+        "name": "Ssiat-hotteok",
+        "status": "transcribed",
+        "description": "Versione di Busan dell'hotteok, ripiena di semi e frutta secca (girasole, zucca, arachidi) con zucchero e cannella; vegetariana. Celebre a BIFF Square e Gukje Market."
+      },
+      {
+        "id": "dish-bibim-dangmyeon",
+        "name": "Bibim-dangmyeon",
+        "status": "transcribed",
+        "description": "Glass noodles freddi conditi con salsa piccante di gochujang; street food di Busan, di norma vegetariano."
+      },
+      {
+        "id": "dish-napjak-mandu",
+        "name": "Napjak-mandu",
+        "status": "transcribed",
+        "description": "Ravioli piatti di Daegu con sottile ripieno di glass noodles e verdure; vegetariani. Tipici del mercato Seomun."
+      },
+      {
+        "id": "dish-omegi-tteok",
+        "name": "Omegi-tteok",
+        "status": "transcribed",
+        "description": "Dolcetto di riso di Jeju in pasta di miglio glutinoso, ricoperto di fagioli rossi (a volte artemisia); vegetariano. Al mercato Dongmun."
+      },
+      {
+        "id": "dish-bingtteok",
+        "name": "Bingtteok",
+        "status": "transcribed",
+        "description": "Crêpe sottile di grano saraceno di Jeju arrotolata su un ripieno di ravanello condito; vegetariana."
+      },
+      {
+        "id": "dish-hallabong",
+        "name": "Hallabong",
+        "status": "transcribed",
+        "description": "Agrume dolce simbolo di Jeju (varietà di mandarino), succoso e facile da sbucciare; vegetariano."
+      },
+      {
+        "id": "dish-nokcha-ice-cream",
+        "name": "Gelato al tè verde (nokcha)",
+        "status": "transcribed",
+        "description": "Soft-serve al tè verde, specialità di Boseong (raggiungibile da Suncheon), cuore della regione coreana del tè verde; vegetariano."
+      }
+    ],
+    "cities": [
+      {
+        "id": "city-seoul",
+        "name": "Seoul",
+        "itineraryCityNames": [
+          "Seoul"
+        ],
+        "dishIds": [
+          "dish-temple-food"
+        ]
+      },
+      {
+        "id": "city-andong",
+        "name": "Andong",
+        "itineraryCityNames": [
+          "Andong"
+        ],
+        "dishIds": [
+          "dish-heotjesabap"
+        ]
+      },
+      {
+        "id": "city-gyeongju",
+        "name": "Gyeongju",
+        "itineraryCityNames": [
+          "Gyeongju"
+        ],
+        "dishIds": [
+          "dish-hwangnam-ppang",
+          "dish-ssambap"
+        ]
+      },
+      {
+        "id": "city-daegu",
+        "name": "Daegu",
+        "itineraryCityNames": [
+          "Daegu"
+        ],
+        "dishIds": [
+          "dish-napjak-mandu"
+        ]
+      },
+      {
+        "id": "city-busan",
+        "name": "Busan",
+        "itineraryCityNames": [
+          "Busan"
+        ],
+        "dishIds": [
+          "dish-ssiat-hotteok",
+          "dish-bibim-dangmyeon"
+        ]
+      },
+      {
+        "id": "city-jeonju",
+        "name": "Jeonju",
+        "itineraryCityNames": [
+          "Jeonju"
+        ],
+        "dishIds": [
+          "dish-bibimbap"
+        ]
+      },
+      {
+        "id": "city-suncheon",
+        "name": "Suncheon",
+        "itineraryCityNames": [
+          "Suncheon"
+        ],
+        "dishIds": [
+          "dish-nokcha-ice-cream"
+        ]
+      },
+      {
+        "id": "city-jeju",
+        "name": "Jeju",
+        "itineraryCityNames": [
+          "Jeju"
+        ],
+        "dishIds": [
+          "dish-omegi-tteok",
+          "dish-bingtteok",
+          "dish-hallabong"
+        ]
+      }
+    ]
   },
   "days": [
     {

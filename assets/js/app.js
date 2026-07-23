@@ -155,13 +155,37 @@ function buildGoogleMapsSearchUrl(location) {
     typeof location.longitude === 'number';
   const query = hasCoords
     ? `${location.latitude},${location.longitude}`
-    : [location.name, location.city, location.country]
+    : location.googleMapsQuery || [location.name, location.city, location.country]
         .filter(Boolean)
         .join(', ');
   if (!query) return null;
   const url = new URL('https://www.google.com/maps/search/');
   url.searchParams.set('api', '1');
   url.searchParams.set('query', query);
+  return url.toString();
+}
+
+/** Build one Google Maps directions URL for all geocodable stops in a day. */
+function buildGoogleMapsDirectionsUrl(items) {
+  const stops = items
+    .map((item) => {
+      const location = item.location;
+      if (!location) return null;
+      if (typeof location.latitude === 'number' && typeof location.longitude === 'number') {
+        return `${location.latitude},${location.longitude}`;
+      }
+      return location.googleMapsQuery || [location.name, location.city, location.country]
+        .filter(Boolean)
+        .join(', ');
+    })
+    .filter(Boolean);
+
+  if (stops.length < 2) return null;
+  const url = new URL('https://www.google.com/maps/dir/');
+  url.searchParams.set('api', '1');
+  url.searchParams.set('origin', stops[0]);
+  url.searchParams.set('destination', stops[stops.length - 1]);
+  if (stops.length > 2) url.searchParams.set('waypoints', stops.slice(1, -1).join('|'));
   return url.toString();
 }
 
@@ -492,6 +516,20 @@ function renderTripHome(tripId, itinerary) {
   mainEl.focus();
 
   // Wire search filtering after the list is in the DOM.
+  const cards = Array.from(list.querySelectorAll('.day-card'));
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    for (const card of cards) {
+      const matches = query === '' || (card.dataset.searchText || '').includes(query);
+      card.closest('li').hidden = !matches;
+      if (matches) visibleCount += 1;
+    }
+    searchResults.textContent =
+      query === '' ? '' : `${visibleCount} giornata/e su ${cards.length} trovate.`;
+  });
+}
+
 function buildDailyDishSection(tripId, itinerary, day) {
   const section = el('section', 'day-food');
   section.setAttribute('aria-labelledby', 'day-food-title');
@@ -598,20 +636,6 @@ function buildDailyDishSection(tripId, itinerary, day) {
   renderSelection();
 
   return section;
-}
-
-  const cards = Array.from(list.querySelectorAll('.day-card'));
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.trim().toLowerCase();
-    let visibleCount = 0;
-    for (const card of cards) {
-      const matches = query === '' || (card.dataset.searchText || '').includes(query);
-      card.closest('li').hidden = !matches;
-      if (matches) visibleCount += 1;
-    }
-    searchResults.textContent =
-      query === '' ? '' : `${visibleCount} giornata/e su ${cards.length} trovate.`;
-  });
 }
 
 /** Build a lightweight, accessible progress bar with a visible text fallback. */
@@ -903,6 +927,7 @@ function renderDay(tripId, itinerary, dayId) {
   }
 
   article.appendChild(header);
+  if (hasItems) article.appendChild(buildDayMap(day.items));
   article.appendChild(buildDailyDishSection(tripId, itinerary, day));
 
   // Body
@@ -929,6 +954,74 @@ function renderDay(tripId, itinerary, dayId) {
 
   mainEl.appendChild(article);
   mainEl.focus();
+}
+
+/** Offline route overview; the external action resolves the actual geography. */
+function buildDayMap(items) {
+  const mappedItems = items.filter((item) => item.location && (
+    item.location.googleMapsQuery ||
+    item.location.name ||
+    (typeof item.location.latitude === 'number' && typeof item.location.longitude === 'number')
+  ));
+  const section = el('section', 'day-map');
+  section.setAttribute('aria-labelledby', 'day-map-title');
+
+  const heading = el('div', 'day-map__heading');
+  const headingText = document.createElement('div');
+  const title = el('h2', 'day-map__title', 'Mappa della giornata');
+  title.id = 'day-map-title';
+  headingText.appendChild(title);
+  headingText.appendChild(
+    el('p', 'day-map__subtitle', `${mappedItems.length} tappe in ordine di visita`),
+  );
+  heading.appendChild(headingText);
+
+  const directionsUrl = buildGoogleMapsDirectionsUrl(mappedItems);
+  if (directionsUrl) {
+    const directionsLink = el('a', 'day-map__action', 'Apri percorso');
+    directionsLink.href = directionsUrl;
+    directionsLink.target = '_blank';
+    directionsLink.rel = 'noopener noreferrer';
+    directionsLink.setAttribute('aria-label', 'Apri il percorso completo in Google Maps');
+    heading.appendChild(directionsLink);
+  }
+  section.appendChild(heading);
+
+  const route = el('ol', 'day-map__route');
+  route.setAttribute('aria-label', 'Percorso ordinato della giornata');
+  mappedItems.forEach((item, index) => {
+    const stop = el('li', 'day-map__stop');
+    const marker = el('span', 'day-map__marker', String(index + 1));
+    marker.setAttribute('aria-hidden', 'true');
+    stop.appendChild(marker);
+
+    const details = el('div', 'day-map__stop-details');
+    details.appendChild(el('span', 'day-map__stop-name', item.location.name || item.title));
+    const meta = [item.time, labelForType(item.type)].filter(Boolean).join(' · ');
+    if (meta) details.appendChild(el('span', 'day-map__stop-meta', meta));
+    stop.appendChild(details);
+
+    if (index > 0 && item.transferFromPrevious) {
+      const transfer = item.transferFromPrevious;
+      const transferText = [
+        iconForTransferMode(transfer.mode),
+        labelForTransferMode(transfer.mode),
+        transfer.durationMinutes != null ? `${transfer.durationMinutes} min` : null,
+      ].filter(Boolean).join(' ');
+      stop.appendChild(el('span', 'day-map__transfer', transferText));
+    }
+    route.appendChild(stop);
+  });
+  section.appendChild(route);
+
+  section.appendChild(
+    el(
+      'p',
+      'day-map__note',
+      'Schema consultabile offline. Il percorso geografico viene calcolato da Google Maps all’apertura.',
+    ),
+  );
+  return section;
 }
 
 /** ID of the next not-yet-completed item whose time is >= now (today's view only). */
